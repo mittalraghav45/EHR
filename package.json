@@ -1,0 +1,23 @@
+{
+  "dependencies": {
+    "@emotion/react": "^11.11.4",
+    "@emotion/styled": "^11.11.5",
+    "@mui/material": "^5.15.15",
+    "crypto-js": "^4.2.0",
+    "dayjs": "^1.11.10",
+    "md5": "^2.3.0"
+  },
+  "name": "web-coursework",
+  "description": "To make it easy for you to get started with GitLab, here's a list of recommended next steps.",
+  "version": "1.0.0",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://git.soton.ac.uk/comp6251-group-10/web-coursework.git"
+  },
+  "author": "",
+  "license": "ISC"
+}

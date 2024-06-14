@@ -1,0 +1,361 @@
+{
+  "patient": [
+    {
+      "id": 1,
+      "email": "martin@test.com",
+      "password": "ec121ff80513ae58ed478d5c5787075b",
+      "title": "Sir",
+      "firstName": "Martin",
+      "surname": "Ingram",
+      "dateOfBirth": "01/01/1980",
+      "gender": "male",
+      "staffId": 1,
+      "staffName": "Dr Emmett Brown",
+      "phoneNumbers": {
+        "mobile": "07890 123456",
+        "home": "N/A"
+      },
+      "address": {
+        "street": "1 The Street",
+        "line2": "Some Place",
+        "townCity": "This City",
+        "postCode": "TC1 1AA"
+      },
+      "consent": {
+        "email": true,
+        "sms": false,
+        "nextOfKin": true
+      },
+      "language": "English",
+      "nextOfKin": {
+        "name": "Hilda Bloggs",
+        "telephoneNumber": "0987 654321"
+      }
+    },
+    {
+      "email": "abc@xyz.com",
+      "password": "5f4dcc3b5aa765d61d8327deb882cf99",
+      "title": "Mr",
+      "firstName": "Sahil ",
+      "surname": "Hasan",
+      "dateOfBirth": "20/12/2001",
+      "gender": "Male",
+      "staffId": 1,
+      "staffName": "Dr Emmett Brown",
+      "phoneNumbers": {
+        "mobile": "77",
+        "home": "77"
+      },
+      "address": {
+        "street": "Glen Eyre Road",
+        "line2": "",
+        "townCity": "Southampton",
+        "postCode": "SO16 3FU"
+      },
+      "consent": {
+        "email": true,
+        "sms": false,
+        "nextOfKin": false
+      },
+      "id": 2
+    }
+  ],
+  "registration": [
+    {
+      "id": 1,
+      "status": "Rejected",
+      "comments": "This is rubbish",
+      "email": "a.new.patient@test.com",
+      "password": "5d41402abc4b2a76b9719d911017c592",
+      "title": "Miss",
+      "firstName": "Anne New",
+      "surname": "Patient",
+      "dateOfBirth": "1997-01-01T00:00:00.000Z",
+      "gender": "female",
+      "phoneNumbers": {
+        "mobile": "07654 321098",
+        "home": "01234 567890"
+      },
+      "address": {
+        "street": "2 The Street",
+        "line2": "Some Place",
+        "townCity": "This City",
+        "postCode": "TC1 1AA"
+      },
+      "consent": {
+        "email": true,
+        "sms": false,
+        "nextOfKin": true
+      }
+    },
+    {
+      "status": "Pending",
+      "comments": "Jimi is an idiot.",
+      "email": "jimi@test.com",
+      "password": "59bc520266444df0199fbae884424637",
+      "title": "Mr",
+      "firstName": "Jimi",
+      "surname": "Hendrix",
+      "dateOfBirth": "1990-01-01T00:00:00.000Z",
+      "gender": "Male",
+      "phoneNumbers": {
+        "mobile": "07890 123456",
+        "home": ""
+      },
+      "address": {
+        "street": "The Highway",
+        "line2": "",
+        "townCity": "Monterey",
+        "postCode": "SO1 1AA"
+      },
+      "consent": {
+        "email": false,
+        "sms": true,
+        "nextOfKin": false
+      },
+      "id": 2
+    }
+  ],
+  "employee": [
+    {
+      "id": 1,
+      "email": "doc.brown@thefuture.com",
+      "password": "d34bb764c0e4df441cc5c144efb8aad3",
+      "title": "Dr",
+      "firstName": "Emmett",
+      "surname": "Brown",
+      "role": "Doctor"
+    },
+    {
+      "email": "ann.urse@test.com",
+      "password": "9c01d3aec873ea8a53858875e9a4dda3",
+      "title": "Mrs",
+      "firstName": "Ann",
+      "surname": "Urse",
+      "role": "Nurse",
+      "id": 2
+    },
+    {
+      "email": "smith@lostinspace.com",
+      "password": "87a429872c7faee7e8bc9268d5bf548e",
+      "title": "Dr",
+      "firstName": "Zachary",
+      "surname": "Smith",
+      "role": "Doctor",
+      "id": 3
+    }
+  ],
+  "appointmentRequest": [
+    {
+      "id": 1,
+      "patientId": 1,
+      "doctorId": 1,
+      "patientName": "Fred Gumby",
+      "patientEmail": "fred@gumby.com",
+      "patientPostCode": "SO2 2AA",
+      "condition": "My brain hurts.",
+      "appointmentType": "urgent",
+      "availableDates": [
+        "10/05/2024",
+        "11/05/2024"
+      ]
+    },
+    {
+      "patientId": 1,
+      "doctorId": 1,
+      "patientName": "Sir Martin Ingram",
+      "patientEmail": "martin@test.com",
+      "patientPostCode": "TC1 1AA",
+      "condition": "I hear piano notes in my head.",
+      "appointmentType": "Routine",
+      "availableDates": [
+        "03/05/2024",
+        "09/05/2024"
+      ],
+      "id": 2
+    },
+    {
+      "patientId": 1,
+      "patientName": "Sir Martin Ingram",
+      "patientEmail": "martin@test.com",
+      "patientPostCode": "TC1 1AA",
+      "doctorId": 1,
+      "condition": "My leg has fallen off.",
+      "appointmentType": "Urgent",
+      "availableDates": [
+        "03/05/2024",
+        "04/05/2024"
+      ],
+      "id": 3
+    },
+    {
+      "patientId": 1,
+      "patientName": "Sir Martin Ingram",
+      "patientEmail": "martin@test.com",
+      "patientPostCode": "TC1 1AA",
+      "doctorId": 1,
+      "condition": "My laptop died.",
+      "appointmentType": "Routine",
+      "availableDates": [
+        "09/05/2024",
+        "10/05/2024"
+      ],
+      "id": 4
+    },
+    {
+      "patientId": 1,
+      "patientName": "Sir Martin Ingram",
+      "patientEmail": "martin@test.com",
+      "patientPostCode": "TC1 1AA",
+      "doctorId": 1,
+      "condition": "My head hurts",
+      "appointmentType": "Routine",
+      "availableDates": [
+        "04/05/2024",
+        "10/05/2024",
+        "15/05/2024"
+      ],
+      "id": 5
+    },
+    {
+      "patientId": 1,
+      "patientName": "Sir Martin Ingram",
+      "patientEmail": "martin@test.com",
+      "patientPostCode": "TC1 1AA",
+      "doctorId": 1,
+      "condition": "I put my head in a blender.",
+      "appointmentType": "Urgent",
+      "availableDates": [
+        "04/05/2024",
+        "06/05/2024"
+      ],
+      "id": 6
+    }
+  ],
+  "appointment": [
+    {
+      "id": 1,
+      "patientId": 1,
+      "patientName": "Fred Gumby",
+      "patientEmail": "fred@gumby.com",
+      "patientPostCode": "SO2 2AA",
+      "staffId": 1,
+      "staffName": "Dr Emmett Brown",
+      "condition": "My brain hurts.",
+      "appointmentType": "urgent",
+      "date": "10/05/2024",
+      "time": "10:00am"
+    }
+  ],
+  "notes": [
+    {
+      "staffId": -1,
+      "date": "06/05/2024",
+      "summary": "His elbow hurts.",
+      "details": "Deadline's near",
+      "id": 4
+    },
+    {
+      "staffId": 1,
+      "date": "06/05/2024",
+      "summary": "1 x 50222mg aspirin, twice a day with foo",
+      "details": "Brain works ",
+      "id": 5
+    },
+    {
+      "staffId": 1,
+      "date": "06/05/2024",
+      "summary": "1 x 50222mg aspirin, twice a day with ",
+      "details": "gone by",
+      "id": 7
+    },
+    {
+      "staffId": -1,
+      "date": "07/05/2024",
+      "summary": "His brain hurts.111111111111",
+      "details": "111111111111111",
+      "id": 8
+    },
+    {
+      "staffId": -1,
+      "date": "07/05/2024",
+      "summary": "raghav",
+      "details": "raghav",
+      "id": 9
+    },
+    {
+      "patientId": 1,
+      "staffId": -1,
+      "date": "07/05/2024",
+      "summary": "raghav",
+      "details": "raghav",
+      "id": 10
+    },
+    {
+      "patientId": 1,
+      "staffId": -1,
+      "date": "07/05/2024",
+      "summary": "mittal",
+      "details": "mittal",
+      "id": 11
+    }
+  ],
+  "prescription": [
+    {
+      "id": 3,
+      "patientId": 2,
+      "staffId": 1,
+      "appointmentId": 1,
+      "condition": "Brain hurts",
+      "medication": "1 x 50mg aspirin, twice a day with food.",
+      "pharmacy": "The Pharmacy, 1 The Street, Somewhere"
+    },
+    {
+      "id": 4,
+      "patientId": 3,
+      "staffId": 1,
+      "appointmentId": 1,
+      "condition": "Brain hurts",
+      "medication": "1 x 50mg aspirin, twice a day with food.",
+      "pharmacy": "The Pharmacy, 1 The Street, Somewhere"
+    },
+    {
+      "patientId": 1,
+      "staffId": -1,
+      "appointmentId": "4",
+      "condition": "Coding issues",
+      "medication": "drugs",
+      "pharmacy": "Drug Store",
+      "id": 7
+    },
+    {
+      "patientId": 1,
+      "staffId": -1,
+      "condition": "Coding issues",
+      "medication": "no clue",
+      "pharmacy": "Facebookkkk",
+      "id": 8
+    },
+    {
+      "patientId": 1,
+      "staffId": -1,
+      "condition": "Node hurts",
+      "medication": "Drugs",
+      "pharmacy": "Facebook",
+      "id": 9
+    }
+  ],
+  "test": [
+    {
+      "patientId": 1,
+      "staffId": -1,
+      "condition": "Coding issues",
+      "type": "emotional damage",
+      "date": "07/05/2024",
+      "time": "12:00",
+      "location": "UK",
+      "results": "_ve",
+      "id": 3
+    }
+  ]
+}

@@ -1,0 +1,4 @@
+{
+  "/login/:username/:password": "/patient?email=:username&password=:password",
+  "/staff/:username/:password": "/employee?email=:username&password=:password"
+}
