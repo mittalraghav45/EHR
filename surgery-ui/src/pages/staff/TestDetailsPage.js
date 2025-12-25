@@ -1,7 +1,7 @@
 import {useNavigate} from "react-router-dom";
 import {Button, FormLabel, Stack, TextField} from "@mui/material";
 import {PageTitle} from "../../components/PageTitle";
-import {useContext, useEffect, useState} from "react";
+import {useContext, useState} from "react";
 import {StateContext} from "../../contexts/contexts";
 import {useResource} from "react-request-hook"; 
 import {today} from "../../utils/workingDays.js"
@@ -40,8 +40,7 @@ export default function TestDetailsPage() {
         navigate("/staff/tests")
     } 
 
-    const mandatory = condition!== ""&&type !==
-     time!="" && location!="" && results!=""  ;
+    const mandatory = condition !== "" && type !== "" && time !== "" && location !== "" && results !== ""  ;
 
     const isNew = state.test.id === undefined;
     const deletable = !isNew
@@ -128,7 +127,7 @@ console.log('state ',state);
             <Stack direction="row">
             <Button onClick={ handleSave } disabled={!mandatory}>Save</Button>  
                  <Button onClick={ handleDelete } disabled={!deletable}>Delete</Button>
-                <Button variation="outlined" onClick={handleBack}>Back</Button> 
+                <Button variant="outlined" onClick={handleBack}>Back</Button> 
             </Stack>
         </Stack>
     )

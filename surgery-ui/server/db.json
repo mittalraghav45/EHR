@@ -114,6 +114,33 @@
         "nextOfKin": false
       },
       "id": 2
+    },
+    {
+      "status": "Pending",
+      "comments": "",
+      "email": "mittalraghav45@gmail.com",
+      "password": "6fc01c019e3ef284b92fd09d9eb162ae",
+      "title": "Mr",
+      "firstName": "Raghav",
+      "surname": "Mittal",
+      "dateOfBirth": "1990-07-27T23:00:00.000Z",
+      "gender": "Male",
+      "phoneNumbers": {
+        "mobile": "07741910196",
+        "home": ""
+      },
+      "address": {
+        "street": "Southampton, SO14 6UQ",
+        "line2": "",
+        "townCity": "Southampton",
+        "postCode": "SO14 6UQ"
+      },
+      "consent": {
+        "email": true,
+        "sms": true,
+        "nextOfKin": true
+      },
+      "id": 3
     }
   ],
   "employee": [

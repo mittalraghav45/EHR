@@ -10,8 +10,8 @@ export default function AppointmentRequest() {
     const { appointmentRequest, employees } = state
 
     const doctors = employees.filter(employee => employee.role === "Doctor")
-    const registeredWith = doctors.filter(doctor => doctor.id === appointmentRequest.doctorId)[0]
-    const registeredWithName = getFullName(registeredWith)
+    const registeredWith = doctors.find(doctor => doctor.id === appointmentRequest.doctorId)
+    const registeredWithName = registeredWith ? getFullName(registeredWith) : "Not assigned"
 
     return (
         <TableContainer>

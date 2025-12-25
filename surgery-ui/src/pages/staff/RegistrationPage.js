@@ -1,17 +1,13 @@
-import React, { useContext, useState } from 'react';
-import { useNavigate } from 'react-router';
+import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { InputLabel, Select, MenuItem, FormLabel, Button, Container, Stack, TextField, Typography } from "@mui/material";
-import validator from "validator/es";
-import { StaffContext } from "../../contexts/staffContext";
+import validator from "validator";
 import { encrypt } from "../../utils/encrypt";
 import { useResource } from "react-request-hook";
 
 export default function StaffRegistrationPage() {
 
-    const { state, dispatch } = useContext(StaffContext)
     const navigate = useNavigate()
-
-    const { staff } = state
 
     const [firstName, setFirstName] = useState('')
     const [surname, setSurname] = useState('')

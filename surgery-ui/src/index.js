@@ -20,7 +20,7 @@ import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 const root = ReactDOM.createRoot(document.getElementById('root'));
 
 const axiosInstance = axios.create({
-    baseURL: "http://localhost:3000/api/"
+    baseURL: "/api/"
 })
 
 root.render(

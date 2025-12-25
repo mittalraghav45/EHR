@@ -12,35 +12,38 @@ import { PageTitle } from "../../components/PageTitle";
 import { useContext, useState } from "react";
 import { StateContext } from "../../contexts/contexts";
 import { useResource } from "react-request-hook";
+import PatientOnly, { isLoggedIn } from "../../components/PatientOnly";
 
 export default function PersonalDetailsPage() {
   const { state } = useContext(StateContext);
-  const { user } = state;
-  const { patients } = state;
-  console.log("Hello patients here: ", state.patients);
+  const { user, patients } = state;
 
-  const [mobile, setMobile] = useState(patients[0].phoneNumbers.mobile);
-  const [home, setHome] = useState(patients[0].phoneNumbers.home);
-  const [streetAddress, setStreetAddress] = useState(
-    patients[0].address.street || ""
-  );
-  const [addressLine2, setAddressLine2] = useState(
-    patients[0].address.line2 || ""
-  );
-  const [townCity, setTownCity] = useState(patients[0].address.townCity || "");
-  const [postCode, setPostCode] = useState(patients[0].address.postCode || "");
+  const patient = patients?.[0] || {};
+  const phoneNumbers = patient.phoneNumbers || {};
+  const address = patient.address || {};
+  const consent = patient.consent || {};
+
+  const [mobile, setMobile] = useState(phoneNumbers.mobile || "");
+  const [home, setHome] = useState(phoneNumbers.home || "");
+  const [streetAddress, setStreetAddress] = useState(address.street || "");
+  const [addressLine2, setAddressLine2] = useState(address.line2 || "");
+  const [townCity, setTownCity] = useState(address.townCity || "");
+  const [postCode, setPostCode] = useState(address.postCode || "");
   const [emailConsentChange, setEmailConsent] = useState(
-    patients[0].consent.email
+    consent.email || false
   );
-  const [smsConsentChange, setSmsConsent] = useState(patients[0].consent.sms);
+  const [smsConsentChange, setSmsConsent] = useState(consent.sms || false);
   const [nextOfKinConsentChange, setNextOfKinConsent] = useState(
-    patients[0].consent.nextOfKin
+    consent.nextOfKin || false
   );
 
   const name =
-    patients[0].title + " " + patients[0].firstName + " " + patients[0].surname;
+    patient.title && patient.firstName && patient.surname
+      ? patient.title + " " + patient.firstName + " " + patient.surname
+      : "";
 
   const navigate = useNavigate();
+  const hasPatient = Boolean(patient.id);
 
   const handleMobileChange = (event) => {
     setMobile(event.target.value);
@@ -102,103 +105,105 @@ export default function PersonalDetailsPage() {
   }));
 
   function handleSave(event) {
-    save();
+    if (hasPatient) {
+      save();
+    }
   }
   return (
     <Stack direction="column">
       <PageTitle title="View Personal Details" />
+      <PatientOnly />
+      {isLoggedIn(state) && hasPatient && (
+        <>
+          <FormLabel>Patient Name</FormLabel>
+          <TextField id="patientName" value={name} disabled />
 
-      <FormLabel>Patient Name</FormLabel>
-      <TextField id="patientName" value={name} disabled={true} />
+          <FormLabel>Email</FormLabel>
+          <TextField id="email" value={patient.email || ""} disabled />
 
-      <FormLabel>Email</FormLabel>
-      <TextField id="email" value={patients[0].email} disabled={true} />
+          <FormLabel>Mobile No.</FormLabel>
+          <TextField id="mobile" value={mobile} onChange={handleMobileChange} />
 
-      <FormLabel>Mobile No.</FormLabel>
-      <TextField id="mobile" value={mobile} onChange={handleMobileChange} />
+          <FormLabel>Home Telephone No.</FormLabel>
+          <TextField id="home" value={home} onChange={handleHomeChange} />
 
-      <FormLabel>Home Telephone No.</FormLabel>
-      <TextField id="home" value={home} onChange={handleHomeChange} />
+          <FormLabel>Date of Birth</FormLabel>
+          <TextField id="dateOfBirth" value={patient.dateOfBirth || ""} disabled />
 
-      <FormLabel>Date of Birth</FormLabel>
-      <TextField
-        id="dateOfBirth"
-        value={patients[0].dateOfBirth}
-        disabled={true}
-      />
+          <FormLabel>GP Name</FormLabel>
+          <TextField id="gpName" value={patient.staffName || ""} disabled />
 
-      <FormLabel>GP Name</FormLabel>
-      <TextField id="gpName" value={patients[0].staffName} disabled={true} />
+          <FormLabel>Street Name</FormLabel>
+          <TextField
+            id="streetName"
+            value={streetAddress}
+            onChange={handleStreetAddressChange}
+          />
 
-      <FormLabel>Street Name</FormLabel>
-      <TextField
-        id="streetName"
-        value={streetAddress}
-        onChange={handleStreetAddressChange}
-      />
+          <FormLabel>Address Line 2</FormLabel>
+          <TextField
+            id="line2"
+            value={addressLine2}
+            onChange={handleAddressLine2Change}
+          />
 
-      <FormLabel>Address Line 2</FormLabel>
-      <TextField
-        id="line2"
-        value={addressLine2}
-        onChange={handleAddressLine2Change}
-      />
+          <FormLabel>Town / City</FormLabel>
+          <TextField
+            id="townCity"
+            value={townCity}
+            onChange={handleTownCityChange}
+          />
 
-      <FormLabel>Town / City</FormLabel>
-      <TextField
-        id="townCity"
-        value={townCity}
-        onChange={handleTownCityChange}
-      />
+          <FormLabel>PostCode</FormLabel>
+          <TextField
+            id="postCode"
+            value={postCode}
+            onChange={handlePostCodeChange}
+          />
 
-      <FormLabel>PostCode</FormLabel>
-      <TextField
-        id="postCode"
-        value={postCode}
-        onChange={handlePostCodeChange}
-      />
-
-      <FormGroup>
-        <FormControlLabel
-          control={
-            <Switch
-              id="emailConsent"
-              checked={emailConsentChange}
-              onChange={handleEmailConsentChange}
+          <FormGroup>
+            <FormControlLabel
+              control={
+                <Switch
+                  id="emailConsent"
+                  checked={emailConsentChange}
+                  onChange={handleEmailConsentChange}
+                />
+              }
+              label="The surgery may use email to contact me in the future"
             />
-          }
-          label="The surgery may use email to contact me in the future"
-        />
-        <FormControlLabel
-          control={
-            <Switch
-              id="smsConsent"
-              checked={smsConsentChange}
-              onChange={handleSmsConsentChange}
+            <FormControlLabel
+              control={
+                <Switch
+                  id="smsConsent"
+                  checked={smsConsentChange}
+                  onChange={handleSmsConsentChange}
+                />
+              }
+              label="The surgery may use SMS to contact me in the future"
             />
-          }
-          label="The surgery may use SMS to contact me in the future"
-        />
-        <FormControlLabel
-          control={
-            <Switch
-              id="nextOfKinConsent"
-              checked={nextOfKinConsentChange}
-              onChange={handleNextOfKinConsentChange}
+            <FormControlLabel
+              control={
+                <Switch
+                  id="nextOfKinConsent"
+                  checked={nextOfKinConsentChange}
+                  onChange={handleNextOfKinConsentChange}
+                />
+              }
+              label="The surgery may contact my next of kin if necessary"
             />
-          }
-          label="The surgery may contact my next of kin if necessary"
-        />
-      </FormGroup>
+          </FormGroup>
 
-      <Stack direction="row">
-        <Button variation="outlined" onClick={handleSave}>
-          Save
-        </Button>
-        <Button variation="outlined" onClick={handleBack}>
-          Back
-        </Button>
-      </Stack>
+          <Stack direction="row">
+            <Button variant="outlined" onClick={handleSave}>
+              Save
+            </Button>
+            <Button variant="outlined" onClick={handleBack}>
+              Back
+            </Button>
+          </Stack>
+        </>
+      )}
     </Stack>
   );
 }

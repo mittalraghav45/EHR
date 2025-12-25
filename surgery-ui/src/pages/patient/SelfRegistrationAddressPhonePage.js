@@ -1,7 +1,7 @@
 import {Button, Container, FormLabel, Stack, TextField, Typography} from "@mui/material";
 import {useContext, useState} from "react";
 import {useNavigate} from "react-router-dom";
-import validator from "validator/es";
+import validator from "validator";
 import {StateContext} from "../../contexts/contexts";
 
 export default function SelfRegistrationAddressPhonePage () {

@@ -59,7 +59,7 @@ export default function PatientLoginPage() {
     }
 
     function handleRegister(event) {
-        navigate("/register");
+        navigate("/register/start");
     }
 
     return (

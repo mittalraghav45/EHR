@@ -92,7 +92,7 @@ export default function MedicalHistoryDetails() {
             <Stack direction="row">                  
                   <Button onClick={ handleSave } disabled={!mandatory}>Save </Button> 
                   <Button onClick={ handleDelete } disabled={!deletable}>Delete</Button>
-                <Button variation="outlined" onClick={handleBack}>Back</Button> 
+                <Button variant="outlined" onClick={handleBack}>Back</Button> 
             </Stack>
         </Stack>
     )

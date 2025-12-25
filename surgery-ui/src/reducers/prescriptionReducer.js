@@ -18,8 +18,6 @@ export function prescriptionReducer(state, action) {
             return {
                 ...initialPrescription
             }
-        case "REST_ERROR":
-            return "Failed to connect to the server. Please try later."
         
         default:
             return state;

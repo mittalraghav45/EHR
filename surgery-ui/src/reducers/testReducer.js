@@ -22,8 +22,6 @@ export function testReducer(state, action) {
             return {
                 ...initialTest
             }
-        case "REST_ERROR":
-            return "Failed to connect to the server. Please try later."
         
         default:
             return state;

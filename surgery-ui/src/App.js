@@ -12,6 +12,7 @@ import { initialUser } from "./reducers/userReducer";
 import { initialEmployee} from "./reducers/employeeReducer";
 import { initialPrescription } from './reducers/prescriptionReducer';
 import { initialTest } from './reducers/testReducer';
+import { initialPatient } from "./reducers/patientReducer";
 import {initialAppointmentRequest} from "./reducers/appointmentRequestReducer";
 import {initialMedHistory} from "./reducers/medicalHistoryReducer";
 import {initialAppointment} from "./reducers/appointmentReducer";
@@ -34,6 +35,7 @@ function App() {
       register: initialRegister,
       registrations: [],
       user: initialUser,
+      patient: initialPatient,
       patients: [],
       medhistory:initialMedHistory,
       medhistorys:[]

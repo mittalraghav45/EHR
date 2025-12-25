@@ -1,9 +1,14 @@
+jest.mock('react-request-hook', () => ({
+  useResource: () => [null, jest.fn()],
+  RequestProvider: ({ children }) => children
+}));
+
 import { render, screen } from '@testing-library/react';
 import App from './App';
 
 
-test('renders learn react link', () => {
+test('renders home page title', () => {
   render(<App />);
-  const linkElement = screen.getByText(/learn react/i);
-  expect(linkElement).toBeInTheDocument();
+  const titleElement = screen.getByText(/Cloud Surgery Services/i);
+  expect(titleElement).toBeInTheDocument();
 });

@@ -5,7 +5,7 @@ import {Fragment, useContext, useEffect, useState} from "react";
 import {StateContext} from "../../contexts/contexts";
 import {useResource} from "react-request-hook";
 import {roles, titles} from "../../utils/dropdownLists";
-import validator from "validator/es";
+import validator from "validator";
 import {encrypt} from "../../utils/encrypt";
 
 export default function EmployeeDetailsPage() {
@@ -139,7 +139,7 @@ export default function EmployeeDetailsPage() {
             <Stack direction="row">
                 <Button onClick={ handleSave } disabled={ !mandatory }>Save</Button>
                 <Button onClick={ handleDelete } disabled={ !deletable }>Delete</Button>
-                <Button variation="outlined" onClick={handleCancel}>Cancel</Button>
+                <Button variant="outlined" onClick={handleCancel}>Cancel</Button>
             </Stack>
         </Stack>
     )
