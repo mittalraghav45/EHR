@@ -17,6 +17,7 @@ export default function StaffLoginPage() {
     const mandatory = userName !== '' && password !== ''
 
     const [ employee, getEmployee ] = useResource(() => ({
+        // Bust caches so json-server doesn't return 304 without a body
         url: "/staff/" + userName + "/" + encrypt(password),
         method: "get"
     }))

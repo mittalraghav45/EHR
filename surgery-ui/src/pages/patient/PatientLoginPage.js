@@ -17,6 +17,7 @@ export default function PatientLoginPage() {
     const mandatory = userName !== '' && password !== ''
 
     const [ patient, getPatient ] = useResource(() => ({
+        // Bust caches so json-server doesn't return 304 without a body
         url: "/login/" + userName + "/" + encrypt(password),
         method: "get"
     }))

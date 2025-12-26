@@ -1,4 +1,4 @@
-import React, { useReducer } from 'react'
+import React, { useEffect, useReducer } from 'react'
 
 import './App.css';
 import { Banner } from "./components/Banner";
@@ -20,7 +20,17 @@ import {initialAppointment} from "./reducers/appointmentReducer";
  
 function App() {
 
-  const [ state, dispatch ] = useReducer(appReducer, {
+  const persistedUser = (() => {
+      if (typeof window === "undefined") return initialUser;
+      try {
+          const stored = localStorage.getItem("user");
+          return stored ? JSON.parse(stored) : initialUser;
+      } catch (e) {
+          return initialUser;
+      }
+  })();
+
+  const initialState = {
       appointment: initialAppointment,
       appointments: [],
       appointmentRequest: initialAppointmentRequest,
@@ -34,12 +44,22 @@ function App() {
       error: '',
       register: initialRegister,
       registrations: [],
-      user: initialUser,
+      user: persistedUser,
       patient: initialPatient,
       patients: [],
       medhistory:initialMedHistory,
       medhistorys:[]
-  })
+  }
+
+  const [ state, dispatch ] = useReducer(appReducer, initialState)
+
+  useEffect(() => {
+      try {
+          localStorage.setItem("user", JSON.stringify(state.user));
+      } catch (e) {
+          // Ignore storage failures (e.g., private mode)
+      }
+  }, [state.user])
 
   return (
     <StateContext.Provider value={{ state, dispatch }}>

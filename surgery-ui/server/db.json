@@ -58,77 +58,21 @@
         "nextOfKin": false
       },
       "id": 2
-    }
-  ],
-  "registration": [
-    {
-      "id": 1,
-      "status": "Rejected",
-      "comments": "This is rubbish",
-      "email": "a.new.patient@test.com",
-      "password": "5d41402abc4b2a76b9719d911017c592",
-      "title": "Miss",
-      "firstName": "Anne New",
-      "surname": "Patient",
-      "dateOfBirth": "1997-01-01T00:00:00.000Z",
-      "gender": "female",
-      "phoneNumbers": {
-        "mobile": "07654 321098",
-        "home": "01234 567890"
-      },
-      "address": {
-        "street": "2 The Street",
-        "line2": "Some Place",
-        "townCity": "This City",
-        "postCode": "TC1 1AA"
-      },
-      "consent": {
-        "email": true,
-        "sms": false,
-        "nextOfKin": true
-      }
     },
     {
-      "status": "Pending",
-      "comments": "Jimi is an idiot.",
-      "email": "jimi@test.com",
-      "password": "59bc520266444df0199fbae884424637",
-      "title": "Mr",
-      "firstName": "Jimi",
-      "surname": "Hendrix",
-      "dateOfBirth": "1990-01-01T00:00:00.000Z",
-      "gender": "Male",
-      "phoneNumbers": {
-        "mobile": "07890 123456",
-        "home": ""
-      },
-      "address": {
-        "street": "The Highway",
-        "line2": "",
-        "townCity": "Monterey",
-        "postCode": "SO1 1AA"
-      },
-      "consent": {
-        "email": false,
-        "sms": true,
-        "nextOfKin": false
-      },
-      "id": 2
-    },
-    {
-      "status": "Pending",
-      "comments": "",
       "email": "mittalraghav45@gmail.com",
       "password": "6fc01c019e3ef284b92fd09d9eb162ae",
       "title": "Mr",
       "firstName": "Raghav",
       "surname": "Mittal",
-      "dateOfBirth": "1990-07-27T23:00:00.000Z",
+      "dateOfBirth": "28/07/1990",
       "gender": "Male",
       "phoneNumbers": {
         "mobile": "07741910196",
         "home": ""
       },
+      "staffId": 1,
+      "staffName": "Dr Emmett Brown",
       "address": {
         "street": "Southampton, SO14 6UQ",
         "line2": "",
@@ -141,8 +85,117 @@
         "nextOfKin": true
       },
       "id": 3
+    },
+    {
+      "email": "test@gmail.com",
+      "password": "dd019d2558f6e70837033950dbfe587a",
+      "title": "Mr",
+      "firstName": "Raghav",
+      "surname": "Mittal",
+      "dateOfBirth": "01/01/1990",
+      "gender": "Male",
+      "phoneNumbers": {
+        "mobile": "07741910196",
+        "home": ""
+      },
+      "staffId": 1,
+      "staffName": "Dr Emmett Brown",
+      "address": {
+        "street": "6",
+        "line2": "",
+        "townCity": "Southampton",
+        "postCode": "SO14 6UQ"
+      },
+      "consent": {
+        "email": true,
+        "sms": true,
+        "nextOfKin": true
+      },
+      "id": 4
+    },
+    {
+      "email": "jimi@test.com",
+      "password": "59bc520266444df0199fbae884424637",
+      "title": "Mr",
+      "firstName": "Jimi",
+      "surname": "Hendrix",
+      "dateOfBirth": "01/01/1990",
+      "gender": "Male",
+      "phoneNumbers": {
+        "mobile": "07890 123456",
+        "home": ""
+      },
+      "staffId": 3,
+      "staffName": "Dr Zachary Smith",
+      "address": {
+        "street": "The Highway",
+        "line2": "",
+        "townCity": "Monterey",
+        "postCode": "SO1 1AA"
+      },
+      "consent": {
+        "email": false,
+        "sms": true,
+        "nextOfKin": false
+      },
+      "id": 5
+    },
+    {
+      "email": "a.new.patient@test.com",
+      "password": "5d41402abc4b2a76b9719d911017c592",
+      "title": "Miss",
+      "firstName": "Anne New",
+      "surname": "Patient",
+      "dateOfBirth": "01/01/1997",
+      "gender": "female",
+      "phoneNumbers": {
+        "mobile": "07654 321098",
+        "home": "01234 567890"
+      },
+      "staffId": 1,
+      "staffName": "Dr Emmett Brown",
+      "address": {
+        "street": "2 The Street",
+        "line2": "Some Place",
+        "townCity": "This City",
+        "postCode": "TC1 1AA"
+      },
+      "consent": {
+        "email": true,
+        "sms": false,
+        "nextOfKin": true
+      },
+      "id": 6
+    },
+    {
+      "email": "patient@gmail.com",
+      "password": "b39024efbc6de61976f585c8421c6bba",
+      "title": "Mr",
+      "firstName": "Raghav",
+      "surname": "Mittal",
+      "dateOfBirth": "01/01/1990",
+      "gender": "Male",
+      "phoneNumbers": {
+        "mobile": "07741910196",
+        "home": ""
+      },
+      "staffId": 1,
+      "staffName": "Dr Emmett Brown",
+      "address": {
+        "street": "61",
+        "line2": "",
+        "townCity": "Southampton",
+        "postCode": "SO14 6UQ"
+      },
+      "consent": {
+        "email": true,
+        "sms": true,
+        "nextOfKin": true
+      },
+      "id": 7
     }
   ],
+  "registration": [],
   "employee": [
     {
       "id": 1,
@@ -170,37 +223,27 @@
       "surname": "Smith",
       "role": "Doctor",
       "id": 3
+    },
+    {
+      "firstName": "Raghav",
+      "surname": "Mittal",
+      "email": "mittalraghav@gmail.com",
+      "role": "Administrator",
+      "title": "Mr",
+      "password": "494744ae1e9f0d24b0904109200b7fa2",
+      "id": 4
+    },
+    {
+      "firstName": "Raghav",
+      "surname": "Mittal",
+      "email": "staff@gmail.com",
+      "role": "doctor",
+      "title": "Mr",
+      "password": "1253208465b1efa876f982d8a9e73eef",
+      "id": 5
     }
   ],
   "appointmentRequest": [
-    {
-      "id": 1,
-      "patientId": 1,
-      "doctorId": 1,
-      "patientName": "Fred Gumby",
-      "patientEmail": "fred@gumby.com",
-      "patientPostCode": "SO2 2AA",
-      "condition": "My brain hurts.",
-      "appointmentType": "urgent",
-      "availableDates": [
-        "10/05/2024",
-        "11/05/2024"
-      ]
-    },
-    {
-      "patientId": 1,
-      "doctorId": 1,
-      "patientName": "Sir Martin Ingram",
-      "patientEmail": "martin@test.com",
-      "patientPostCode": "TC1 1AA",
-      "condition": "I hear piano notes in my head.",
-      "appointmentType": "Routine",
-      "availableDates": [
-        "03/05/2024",
-        "09/05/2024"
-      ],
-      "id": 2
-    },
     {
       "patientId": 1,
       "patientName": "Sir Martin Ingram",
@@ -214,49 +257,6 @@
         "04/05/2024"
       ],
       "id": 3
-    },
-    {
-      "patientId": 1,
-      "patientName": "Sir Martin Ingram",
-      "patientEmail": "martin@test.com",
-      "patientPostCode": "TC1 1AA",
-      "doctorId": 1,
-      "condition": "My laptop died.",
-      "appointmentType": "Routine",
-      "availableDates": [
-        "09/05/2024",
-        "10/05/2024"
-      ],
-      "id": 4
-    },
-    {
-      "patientId": 1,
-      "patientName": "Sir Martin Ingram",
-      "patientEmail": "martin@test.com",
-      "patientPostCode": "TC1 1AA",
-      "doctorId": 1,
-      "condition": "My head hurts",
-      "appointmentType": "Routine",
-      "availableDates": [
-        "04/05/2024",
-        "10/05/2024",
-        "15/05/2024"
-      ],
-      "id": 5
-    },
-    {
-      "patientId": 1,
-      "patientName": "Sir Martin Ingram",
-      "patientEmail": "martin@test.com",
-      "patientPostCode": "TC1 1AA",
-      "doctorId": 1,
-      "condition": "I put my head in a blender.",
-      "appointmentType": "Urgent",
-      "availableDates": [
-        "04/05/2024",
-        "06/05/2024"
-      ],
-      "id": 6
     }
   ],
   "appointment": [
@@ -272,6 +272,84 @@
       "appointmentType": "urgent",
       "date": "10/05/2024",
       "time": "10:00am"
+    },
+    {
+      "patientId": 1,
+      "patientName": "Fred Gumby",
+      "patientEmail": "fred@gumby.com",
+      "patientPostCode": "SO2 2AA",
+      "staffId": 1,
+      "staffName": "Dr Emmett Brown",
+      "condition": "My brain hurts.",
+      "appointmentType": "urgent",
+      "date": "10/05/2024",
+      "time": "9:00am",
+      "id": 2
+    },
+    {
+      "patientId": 1,
+      "patientName": "Sir Martin Ingram",
+      "patientEmail": "martin@test.com",
+      "patientPostCode": "TC1 1AA",
+      "staffId": 1,
+      "staffName": "Dr Emmett Brown",
+      "condition": "I hear piano notes in my head.",
+      "appointmentType": "Routine",
+      "date": "03/05/2024",
+      "time": "12:00pm",
+      "id": 3
+    },
+    {
+      "patientId": 1,
+      "patientName": "Sir Martin Ingram",
+      "patientEmail": "martin@test.com",
+      "patientPostCode": "TC1 1AA",
+      "staffId": 1,
+      "staffName": "Dr Emmett Brown",
+      "condition": "My head hurts",
+      "appointmentType": "Routine",
+      "date": "15/05/2024",
+      "time": "9:00am",
+      "id": 4
+    },
+    {
+      "patientId": 1,
+      "patientName": "Sir Martin Ingram",
+      "patientEmail": "martin@test.com",
+      "patientPostCode": "TC1 1AA",
+      "staffId": 1,
+      "staffName": "Dr Emmett Brown",
+      "condition": "My laptop died.",
+      "appointmentType": "Routine",
+      "date": "09/05/2024",
+      "time": "3:00pm",
+      "id": 5
+    },
+    {
+      "patientId": 1,
+      "patientName": "Sir Martin Ingram",
+      "patientEmail": "martin@test.com",
+      "patientPostCode": "TC1 1AA",
+      "staffId": 1,
+      "staffName": "Dr Emmett Brown",
+      "condition": "I put my head in a blender.",
+      "appointmentType": "Urgent",
+      "date": "06/05/2024",
+      "time": "9:00am",
+      "id": 6
+    },
+    {
+      "patientId": 7,
+      "patientName": "Mr Raghav Mittal",
+      "patientEmail": "patient@gmail.com",
+      "patientPostCode": "SO14 6UQ",
+      "staffId": 1,
+      "staffName": "Dr Emmett Brown",
+      "condition": "code",
+      "appointmentType": "Routine",
+      "date": "27/12/2025",
+      "time": "3:00pm",
+      "id": 7
     }
   ],
   "notes": [
@@ -325,6 +403,14 @@
       "summary": "mittal",
       "details": "mittal",
       "id": 11
+    },
+    {
+      "patientId": 4,
+      "staffId": -1,
+      "date": "26/12/2025",
+      "summary": "test ",
+      "details": "test meds",
+      "id": 12
     }
   ],
   "prescription": [
@@ -370,6 +456,14 @@
       "medication": "Drugs",
       "pharmacy": "Facebook",
       "id": 9
+    },
+    {
+      "patientId": 4,
+      "staffId": -1,
+      "condition": "High coding fever",
+      "medication": "Sleep",
+      "pharmacy": "NHS",
+      "id": 10
     }
   ],
   "test": [
