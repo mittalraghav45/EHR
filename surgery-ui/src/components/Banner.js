@@ -5,9 +5,12 @@ import {useContext} from "react";
 export function Banner() {
     const { state } = useContext(StateContext)
     const { user } = state
+    const showUser = user && user.role && user.role !== "none" && user.name
     return (
         <Container>
-            <Typography color="textPrimary" variant="body1">{ user.name }</Typography>
+            { showUser &&
+                <Typography color="textPrimary" variant="body1">{ user.name }</Typography>
+            }
         </Container>
     )
 }

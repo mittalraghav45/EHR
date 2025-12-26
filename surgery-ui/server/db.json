@@ -232,33 +232,9 @@
       "title": "Mr",
       "password": "494744ae1e9f0d24b0904109200b7fa2",
       "id": 4
-    },
-    {
-      "firstName": "Raghav",
-      "surname": "Mittal",
-      "email": "staff@gmail.com",
-      "role": "doctor",
-      "title": "Mr",
-      "password": "1253208465b1efa876f982d8a9e73eef",
-      "id": 5
     }
   ],
-  "appointmentRequest": [
-    {
-      "patientId": 1,
-      "patientName": "Sir Martin Ingram",
-      "patientEmail": "martin@test.com",
-      "patientPostCode": "TC1 1AA",
-      "doctorId": 1,
-      "condition": "My leg has fallen off.",
-      "appointmentType": "Urgent",
-      "availableDates": [
-        "03/05/2024",
-        "04/05/2024"
-      ],
-      "id": 3
-    }
-  ],
+  "appointmentRequest": [],
   "appointment": [
     {
       "id": 1,
@@ -350,6 +326,32 @@
       "date": "27/12/2025",
       "time": "3:00pm",
       "id": 7
+    },
+    {
+      "patientId": 7,
+      "patientName": "Mr Raghav Mittal",
+      "patientEmail": "patient@gmail.com",
+      "patientPostCode": "SO14 6UQ",
+      "staffId": 1,
+      "staffName": "Dr Emmett Brown",
+      "condition": "code2",
+      "appointmentType": "Urgent",
+      "date": "05/01/2026",
+      "time": "12:00pm",
+      "id": 8
+    },
+    {
+      "patientId": 1,
+      "patientName": "Sir Martin Ingram",
+      "patientEmail": "martin@test.com",
+      "patientPostCode": "TC1 1AA",
+      "staffId": 1,
+      "staffName": "Dr Emmett Brown",
+      "condition": "My leg has fallen off.",
+      "appointmentType": "Urgent",
+      "date": "03/05/2024",
+      "time": "3:00pm",
+      "id": 9
     }
   ],
   "notes": [

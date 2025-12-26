@@ -19,10 +19,13 @@ export default function HomePage () {
     }
 
     return (
-        <Stack direction="column">
-            <PageTitle title="Services" />
-            <Button fullWidth onClick={handleLogin}>Login</Button>
-            <Button fullWidth onClick={handleRegister}>Register</Button>
+        <Stack direction="column" spacing={2}>
+            <PageTitle title="Welcome to Cloud Surgery" />
+            <Button fullWidth variant="contained" onClick={handleLogin}>Patient Login</Button>
+            <Button fullWidth variant="outlined" onClick={handleRegister}>Register as a New Patient</Button>
+            <Button fullWidth variant="text" onClick={() => navigate("/staff/login")}>
+                Staff Login
+            </Button>
         </Stack>
     )
 }

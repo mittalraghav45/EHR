@@ -1,5 +1,5 @@
 import {Button, Container, FormLabel, Stack, TextField, Typography} from "@mui/material";
-import {useContext, useState} from "react";
+import {useContext, useEffect, useState} from "react";
 import {useNavigate} from "react-router-dom";
 import validator from "validator";
 import {StateContext} from "../../contexts/contexts";
@@ -30,6 +30,11 @@ export default function SelfRegistrationNameEmailPage () {
 
     const mandatory = firstName !== "" && surname !== "" && email !== "" && password !== ""
         && emailValid && emailsMatch && passwordsMatch
+    const showRequiredNotice = !mandatory
+
+    useEffect(() => {
+        document.title = "Cloud Surgery Self Registration"
+    }, [])
 
     function handleFirstName(event) {
         setFirstName(event.target.value)
@@ -71,6 +76,11 @@ export default function SelfRegistrationNameEmailPage () {
             <Typography spacing={2} color="textSecondary" variant="body1">
                 Please enter your name, email address and a password to continue.
             </Typography>
+            { showRequiredNotice &&
+                <Typography color="error" variant="body2">
+                    All fields are required. Please enter a valid email and matching passwords to continue.
+                </Typography>
+            }
             <Stack direction="column" spacing={1}>
                 <FormLabel>First Name </FormLabel>
                 <TextField id="firstName" value={firstName} onChange={handleFirstName} />

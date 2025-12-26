@@ -1,1 +1,6 @@
 /* Nothing to see here... */
+
+/* Hide stray progress spinners that appear in inputs due to MUI defaults */
+.MuiCircularProgress-root {
+    display: none !important;
+}

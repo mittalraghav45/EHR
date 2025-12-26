@@ -61,6 +61,9 @@ export default function StaffLoginPage() {
     return (
         <Stack direction="column">
             <PageTitle title="Staff Login" />
+            <Typography color="textSecondary" variant="body1" paddingBottom={1}>
+                This secure login is for surgery staff only. Use your staff email address and password to access the staff dashboard. Patients should log in via the patient portal instead.
+            </Typography>
             <FormLabel>User Name</FormLabel>
             <TextField id="userName" value={userName} onChange={ handleUserName } />
             <FormLabel>Password</FormLabel>

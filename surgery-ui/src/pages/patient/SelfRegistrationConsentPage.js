@@ -7,7 +7,7 @@ import {
     Switch,
     Typography
 } from "@mui/material";
-import {useContext, useState} from "react";
+import {useContext, useEffect, useState} from "react";
 import {useNavigate} from "react-router-dom";
 import {StateContext} from "../../contexts/contexts";
 
@@ -22,6 +22,10 @@ export default function SelfRegistrationConsentPage () {
     const [ emailConsent, setEmailConsent ] = useState(register.consent.email)
     const [ smsConsent, setSmsConsent ] = useState(register.consent.sms)
     const [ nextOfKinConsent, setNextOfKinConsent ] = useState(register.consent.nextOfKin)
+
+    useEffect(() => {
+        document.title = "Cloud Surgery Self Registration"
+    }, [])
 
     function handleEmailConsent(event) {
         setEmailConsent(event.target.checked)

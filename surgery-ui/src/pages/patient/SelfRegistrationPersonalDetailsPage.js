@@ -1,5 +1,5 @@
 import {Button, Container, FormLabel, MenuItem, Select, Stack, TextField, Typography} from "@mui/material";
-import {useContext, useState} from "react";
+import {useContext, useEffect, useState} from "react";
 import {DatePicker} from "@mui/x-date-pickers";
 import {useNavigate} from "react-router-dom";
 import {StateContext} from "../../contexts/contexts";
@@ -11,14 +11,21 @@ export default function SelfRegistrationPersonalDetailsPage () {
     const navigate = useNavigate()
 
     const { register } = state
+    const safeRegister = register || {}
 
-    console.log(register)
-
-    const [ title, setTitle ] = useState(register.title)
-    const [ dateOfBirth, setDateOfBirth ] = useState(register.dateOfBirth)
-    const [ gender, setGender ] = useState(register.gender)
+    const [ title, setTitle ] = useState(safeRegister.title)
+    const [ dateOfBirth, setDateOfBirth ] = useState(safeRegister.dateOfBirth || null)
+    const [ gender, setGender ] = useState(safeRegister.gender)
+    const firstName = safeRegister.firstName || ""
+    const surname = safeRegister.surname || ""
+    const email = safeRegister.email || ""
 
     const mandatory = title !== "" && gender !== ""
+    const requiredNotice = !mandatory
+
+    useEffect(() => {
+        document.title = "Cloud Surgery Self Registration"
+    }, [])
 
     function handleTitle(event) {
         setTitle(event.target.value)
@@ -50,6 +57,11 @@ export default function SelfRegistrationPersonalDetailsPage () {
             <Typography spacing={2} color="textSecondary" variant="body1">
                 Please select your title, data of birth and gender.
             </Typography>
+            { requiredNotice &&
+                <Typography color="error" variant="body2">
+                    Please choose a title and gender to continue.
+                </Typography>
+            }
             <Stack direction="column" spacing={1}>
                 <FormLabel>Title</FormLabel>
                 <Select id="title" value={title} onChange={handleTitle}>
@@ -58,11 +70,11 @@ export default function SelfRegistrationPersonalDetailsPage () {
                     ))}
                 </Select>
                 <FormLabel>First Name </FormLabel>
-                <TextField id="firstName" value={register.firstName} disabled={true} />
+                <TextField id="firstName" value={firstName} InputProps={{ readOnly: true }} />
                 <FormLabel>Family / Surname</FormLabel>
-                <TextField id="surname" value={register.surname} disabled={true} />
+                <TextField id="surname" value={surname} InputProps={{ readOnly: true }} />
                 <FormLabel>Email Address </FormLabel>
-                <TextField id="email" value={register.email} disabled={true} />
+                <TextField id="email" value={email} InputProps={{ readOnly: true }} />
                 <FormLabel>Date Of Birth</FormLabel>
                 <DatePicker id={"dateOfBirth"} value={dateOfBirth} onChange={handleDateOfBirth} />
                 <FormLabel>Gender</FormLabel>

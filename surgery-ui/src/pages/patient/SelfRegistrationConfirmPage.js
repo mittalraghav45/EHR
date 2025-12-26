@@ -1,4 +1,4 @@
-import {useContext} from "react";
+import {useContext, useEffect} from "react";
 import {StateContext} from "../../contexts/contexts";
 import {useNavigate} from "react-router-dom";
 import {Registration} from "../../components/Registration";
@@ -20,6 +20,10 @@ export default function SelfRegistrationConfirmPage () {
         data: data
     }))
 
+    useEffect(() => {
+        document.title = "Cloud Surgery Self Registration"
+    }, [])
+
     function handleBack(event) {
         navigate("/register/consent")
     }
@@ -39,6 +43,9 @@ export default function SelfRegistrationConfirmPage () {
             </Typography>
             <Typography spacing={2} color="textSecondary" variant="body1">
                 Please check the details that you have entered before submitting your registration.
+            </Typography>
+            <Typography color="textSecondary" variant="body2" paddingBottom={1}>
+                Below is the information you provided. If anything looks wrong, use Back to edit before submitting.
             </Typography>
             <Stack direction="column" spacing={1}>
                 <Registration registration={register} />

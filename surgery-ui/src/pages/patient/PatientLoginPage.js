@@ -66,6 +66,9 @@ export default function PatientLoginPage() {
     return (
         <Stack direction="column">
             <PageTitle title="Patient Login" />
+            <Typography color="textSecondary" variant="body1" paddingBottom={1}>
+                This area is for patients to access their appointments, prescriptions, and test results. Sign in with the email and password you used to register, or create a new account if you have not registered yet.
+            </Typography>
             <FormLabel>User Name</FormLabel>
             <TextField id="userName" value={userName} onChange={ handleUserName } />
             <FormLabel>Password</FormLabel>

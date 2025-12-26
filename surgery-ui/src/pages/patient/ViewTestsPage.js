@@ -1,5 +1,5 @@
 import {useNavigate} from "react-router-dom";
-import {Button, Stack, Table, TableBody, TableCell, TableContainer, TableHead, TableRow} from "@mui/material";
+import {Button, Stack, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Typography} from "@mui/material";
 import {Fragment, useContext, useEffect} from "react";
 import {useResource} from "react-request-hook";
 import {StateContext} from "../../contexts/contexts";
@@ -54,6 +54,13 @@ export default function ViewTestsPage () {
 function TestList() {
     const { state } = useContext(StateContext)
     const { tests } = state
+    if (!tests || tests.length === 0) {
+        return (
+            <Typography color="textSecondary" variant="body2" paddingTop={1}>
+                No test records found.
+            </Typography>
+        )
+    }
     return (
         <TableContainer>
             <Table>

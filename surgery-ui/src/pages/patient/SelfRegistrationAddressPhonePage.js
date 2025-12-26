@@ -1,5 +1,5 @@
 import {Button, Container, FormLabel, Stack, TextField, Typography} from "@mui/material";
-import {useContext, useState} from "react";
+import {useContext, useEffect, useState} from "react";
 import {useNavigate} from "react-router-dom";
 import validator from "validator";
 import {StateContext} from "../../contexts/contexts";
@@ -23,6 +23,11 @@ export default function SelfRegistrationAddressPhonePage () {
     const postCodeError = postCodeValid ? "" : "Please enter a valid post code"
 
     const mandatory = street !== "" && townCity !== "" && postCode !== "" && (home !== "" || mobile !== "")
+    const phoneMissing = home === "" && mobile === ""
+
+    useEffect(() => {
+        document.title = "Cloud Surgery Self Registration"
+    }, [])
 
     function handleStreet(event) {
         setStreet(event.target.value)
@@ -65,6 +70,11 @@ export default function SelfRegistrationAddressPhonePage () {
             <Typography spacing={2} color="textSecondary" variant="body1">
                 Please provide your address and at least one phone number.
             </Typography>
+            { phoneMissing &&
+                <Typography color="error" variant="body2">
+                    Enter a mobile or home phone number so we can contact you.
+                </Typography>
+            }
             <Stack direction="column" spacing={1}>
                 <FormLabel>Street Address </FormLabel>
                 <TextField id="street" value={street} onChange={handleStreet}/>

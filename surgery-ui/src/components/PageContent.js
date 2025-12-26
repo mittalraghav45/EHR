@@ -38,7 +38,7 @@ import ViewRegistrationRequestsPage from "../pages/staff/ViewRegistrationRequest
 import ApproveRegistrationRequestPage from "../pages/staff/ApproveRegistrationRequestPage";
 import ViewAppointmentRequestsPage from "../pages/staff/ViewAppointmentRequestsPage";
 
-import {BrowserRouter as Router, Route, Routes} from "react-router-dom";
+import {BrowserRouter as Router, Navigate, Route, Routes} from "react-router-dom";
 import React from "react";
 import {Container} from "@mui/material";
 import TodaysAppointmentsPage from "../pages/staff/TodaysAppointmentsPage";
@@ -50,6 +50,7 @@ export function PageContent() {
             <Router>
                 <Routes>
                     <Route path="/" element={<HomePage />} />
+                    <Route path="/patient/register" element={<Navigate to="/register/start" replace />} />
                     <Route path="/patient/appointmentRequest" element={<AppointmentRequestPage />} />
                     <Route path="/patient/appointments" element={<ViewAppointmentsPage />} />
                     <Route path="/patient/details" element={<PersonalDetailsPage />} />
