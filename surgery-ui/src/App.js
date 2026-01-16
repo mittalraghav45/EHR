@@ -4,6 +4,7 @@ import './App.css';
 import { Banner } from "./components/Banner";
 import { Footer } from "./components/Footer";
 import { PageContent } from "./components/PageContent";
+import { SessionManager } from "./components/SessionManager";
 
 import { StateContext } from "./contexts/contexts"
 import appReducer from "./reducers/reducers";
@@ -16,6 +17,7 @@ import { initialPatient } from "./reducers/patientReducer";
 import {initialAppointmentRequest} from "./reducers/appointmentRequestReducer";
 import {initialMedHistory} from "./reducers/medicalHistoryReducer";
 import {initialAppointment} from "./reducers/appointmentReducer";
+import {initialSession} from "./reducers/sessionReducer";
 
  
 function App() {
@@ -38,12 +40,14 @@ function App() {
       patient: initialPatient,
       patients: [],
       medhistory:initialMedHistory,
-      medhistorys:[]
+      medhistorys:[],
+      session: initialSession
   })
 
   return (
     <StateContext.Provider value={{ state, dispatch }}>
       <Banner />
+      <SessionManager />
       <PageContent />
       <Footer />
     </StateContext.Provider>

@@ -1,10 +1,10 @@
-import {useContext, useEffect} from "react";
+import {useContext, useEffect, useState} from "react";
 import {StateContext} from "../../contexts/contexts";
 import {useNavigate} from "react-router-dom";
 import {Registration} from "../../components/Registration";
-import {Button, Container, Stack, Typography} from "@mui/material";
+import {Alert, Button, Container, Stack, Typography} from "@mui/material";
 import {encrypt} from "../../utils/encrypt";
-import {useResource} from "react-request-hook";
+import {buildPatientPayload, buildRegistrationPayload} from "../../utils/registrationMapper";
 
 export default function SelfRegistrationConfirmPage () {
 
@@ -12,13 +12,9 @@ export default function SelfRegistrationConfirmPage () {
     const navigate = useNavigate()
 
     const { register } = state
-    console.log(register)
 
-    const [ , createRegistration ] = useResource((data) => ({
-        url: '/registration',
-        method: 'post',
-        data: data
-    }))
+    const [submitting, setSubmitting] = useState(false)
+    const [submissionError, setSubmissionError] = useState("")
 
     useEffect(() => {
         document.title = "Cloud Surgery Self Registration"
@@ -28,12 +24,53 @@ export default function SelfRegistrationConfirmPage () {
         navigate("/register/consent")
     }
 
-    function handleSubmit(event) {
-        const hashed = encrypt(register.password)
-        const submitted = { ...register, password: hashed }
-        console.log(submitted)
-        createRegistration(submitted)
-        navigate("/")
+    async function handleSubmit(event) {
+        event.preventDefault()
+        if (submitting) {
+            return
+        }
+        setSubmitting(true)
+        setSubmissionError("")
+
+        try {
+            const hashed = encrypt(register.password)
+            const patientPayload = buildPatientPayload(register, hashed)
+            const patientResponse = await fetch("/patient", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify(patientPayload)
+            })
+
+            if (!patientResponse.ok) {
+                throw new Error("Failed to create patient")
+            }
+
+            const savedPatient = await patientResponse.json()
+
+            const registrationPayload = buildRegistrationPayload(register, hashed, savedPatient.id)
+            const registrationResponse = await fetch("/registration", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify(registrationPayload)
+            })
+
+            if (!registrationResponse.ok) {
+                throw new Error("Failed to save registration request")
+            }
+
+            dispatch({ type: "RESET_REGISTER" })
+            navigate("/patient/login", { state: { registrationComplete: true } })
+        } catch (error) {
+            console.error("Patient self-registration failed", error)
+            setSubmissionError("We couldn't complete your registration. Please try again.")
+            dispatch({ type: "REST_ERROR" })
+        } finally {
+            setSubmitting(false)
+        }
     }
 
     return (
@@ -49,9 +86,14 @@ export default function SelfRegistrationConfirmPage () {
             </Typography>
             <Stack direction="column" spacing={1}>
                 <Registration registration={register} />
+                { submissionError !== "" &&
+                    <Alert severity="error">{ submissionError }</Alert>
+                }
                 <Stack direction="row" spacing={1}>
                     <Button variant="outlined" onClick={handleBack}>Back</Button>
-                    <Button variant="contained" onClick={handleSubmit}>Submit</Button>
+                    <Button variant="contained" disabled={submitting} onClick={handleSubmit}>
+                        { submitting ? "Submitting..." : "Submit" }
+                    </Button>
                 </Stack>
             </Stack>
         </Container>

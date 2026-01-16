@@ -14,6 +14,8 @@ import ViewAppointmentsPage from "../pages/patient/ViewAppointmentsPage";
 import ViewMedicalHistoryPage from "../pages/patient/ViewMedicalHistoryPage";
 import ViewPrescriptionsPage from "../pages/patient/ViewPrescriptionsPage";
 import ViewTestsPage from "../pages/patient/ViewTestsPage";
+import ForgotPasswordPage from "../pages/patient/ForgotPasswordPage";
+import ResetPasswordPage from "../pages/patient/ResetPasswordPage";
 
 // Staff Pages
 
@@ -59,6 +61,8 @@ export function PageContent() {
                     <Route path="/patient/menu" element={<PatientMenuPage />} />
                     <Route path="/patient/prescriptions" element={<ViewPrescriptionsPage />} />
                     <Route path="/patient/tests" element={<ViewTestsPage />} />
+                    <Route path="/patient/password/forgot" element={<ForgotPasswordPage />} />
+                    <Route path="/patient/password/reset" element={<ResetPasswordPage />} />
                     <Route path="/register/confirm" element={<SelfRegistrationConfirmPage />} />
                     <Route path="/register/consent" element={<SelfRegistrationConsentPage />} />
                     <Route path="/register/contact" element={<SelfRegistrationAddressPhonePage />} />

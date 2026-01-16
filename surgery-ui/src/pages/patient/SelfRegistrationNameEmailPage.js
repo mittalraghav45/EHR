@@ -1,8 +1,9 @@
-import {Button, Container, FormLabel, Stack, TextField, Typography} from "@mui/material";
+import {Button, Container, FormLabel, LinearProgress, Stack, TextField, Typography} from "@mui/material";
 import {useContext, useEffect, useState} from "react";
 import {useNavigate} from "react-router-dom";
 import validator from "validator";
 import {StateContext} from "../../contexts/contexts";
+import {passwordCriteria, evaluatePassword, passwordStrengthPercent as getPasswordStrengthPercent} from "../../utils/passwordPolicy";
 
 export default function SelfRegistrationNameEmailPage () {
 
@@ -10,7 +11,6 @@ export default function SelfRegistrationNameEmailPage () {
     const navigate = useNavigate()
 
     const { register } = state
-    console.log(register)
 
     const [ firstName, setFirstName ] = useState(register.firstName)
     const [ surname, setSurname ] = useState(register.surname)
@@ -28,8 +28,15 @@ export default function SelfRegistrationNameEmailPage () {
     const passwordsMatch = (password === confirmPassword)
     const passwordError = passwordsMatch ? "" : "Passwords do not match"
 
+    const passwordEvaluation = evaluatePassword(password)
+    const passwordPolicyMet = passwordEvaluation.isValid
+    const passwordPolicyHelper = password === "" || passwordPolicyMet
+        ? "Use a strong password to protect your account."
+        : "Password must include: " + passwordEvaluation.results.filter(result => !result.passed).map(result => result.label).join(", ")
+    const strengthPercent = getPasswordStrengthPercent(passwordEvaluation.score)
+
     const mandatory = firstName !== "" && surname !== "" && email !== "" && password !== ""
-        && emailValid && emailsMatch && passwordsMatch
+        && emailValid && emailsMatch && passwordsMatch && passwordPolicyMet
     const showRequiredNotice = !mandatory
 
     useEffect(() => {
@@ -93,7 +100,32 @@ export default function SelfRegistrationNameEmailPage () {
                 <TextField id="confirmEmail" value={confirmEmail} onChange={handleConfirmEmail}
                            error={!emailsMatch} helperText={emailMatchError} />
                 <FormLabel>New Password </FormLabel>
-                <TextField id="password" value={password} type="password" onChange={handlePassword} />
+                <TextField
+                    id="password"
+                    value={password}
+                    type="password"
+                    onChange={handlePassword}
+                    error={!passwordPolicyMet && password !== ""}
+                    helperText={passwordPolicyHelper}
+                />
+                <LinearProgress
+                    variant="determinate"
+                    value={strengthPercent}
+                />
+                <Typography variant="body2" color="textSecondary">
+                    Password must contain all of the following:
+                </Typography>
+                <Stack direction="column" spacing={0.5}>
+                    { passwordEvaluation.results.map((result) => (
+                        <Typography
+                            key={result.label}
+                            color={result.passed ? "success.main" : "textSecondary"}
+                            variant="caption"
+                        >
+                            { result.passed ? "[x]" : "[ ]" } { result.label }
+                        </Typography>
+                    ))}
+                </Stack>
                 <FormLabel>Confirm New Password</FormLabel>
                 <TextField id="confirmPassword" value={confirmPassword} type="password" onChange={handleConfirmPassword}
                            error={!passwordsMatch} helperText={passwordError} />

@@ -37,11 +37,23 @@ export default function ApproveRegistrationRequestPage () {
         method: "delete"
     }))
 
-    const [ , createPatient ] = useResource((data) => ({
-        url: "patient",
-        method: "post",
-        data: data
-    }))
+    const [ , upsertPatient ] = useResource((data) => {
+        if (register.patientId) {
+            return {
+                url: "patient/" + register.patientId,
+                method: "put",
+                data: {
+                    ...data,
+                    id: register.patientId
+                }
+            }
+        }
+        return {
+            url: "patient",
+            method: "post",
+            data: data
+        }
+    })
 
     function handleComments(event) {
         setComments(event.target.value)
@@ -65,9 +77,10 @@ export default function ApproveRegistrationRequestPage () {
             staffId: staff.id,
             staffName: staff.title + " " + staff.firstName + " " + staff.surname,
             address: register.address,
-            consent: register.consent
+            consent: register.consent,
+            patientStatus: "Active"
         }
-        createPatient(data)
+        upsertPatient(data)
         deleteRegistration()
         navigate("/staff/registrations")
     }

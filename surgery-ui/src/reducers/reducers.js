@@ -16,6 +16,7 @@ import { medicalHistoryReducer } from "./medicalHistoryReducer";
 import { medicalHistoryListReducer } from "./medicalHistoryListReducer";
 import {appointmentsReducer} from "./appointmentsReducer";
 import {appointmentReducer} from "./appointmentReducer";
+import {sessionReducer} from "./sessionReducer";
 
 
 export default function appReducer(state, action) {
@@ -37,6 +38,7 @@ export default function appReducer(state, action) {
         patients: patientListReducer(state.patients,action),
         patient: patientReducer(state.patient, action),
         medhistorys:medicalHistoryListReducer(state.medhistorys,action),
-        medhistory:medicalHistoryReducer(state.medhistory,action)
+        medhistory:medicalHistoryReducer(state.medhistory,action),
+        session: sessionReducer(state.session, action)
     }
 }

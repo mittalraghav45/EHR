@@ -3,6 +3,7 @@ import dayjs from "dayjs";
 export const initialRegister = {
     status: "Pending",
     comments: "",
+    patientId: null,
     email: "",
     password: "",
     title: "",
@@ -76,6 +77,8 @@ export function registrationReducer(state, action) {
                 ...action.register,
                 dateOfBirth: dateOfBirth
             }
+        case "RESET_REGISTER":
+            return initialRegister
         default:
             return state
     }

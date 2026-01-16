@@ -195,7 +195,35 @@
       "id": 7
     }
   ],
-  "registration": [],
+  "registration": [
+    {
+      "status": "Pending",
+      "comments": "",
+      "email": "testpatient@example.com",
+      "password": "abf3c22316e3a3dfaf451ec4e0315043",
+      "title": "Mr",
+      "firstName": "John",
+      "surname": "Smith",
+      "dateOfBirth": "1990-01-01T00:00:00.000Z",
+      "gender": "Male",
+      "phoneNumbers": {
+        "mobile": "07700000000",
+        "home": ""
+      },
+      "address": {
+        "street": "123 Test Street",
+        "line2": "",
+        "townCity": "Southampton",
+        "postCode": "SO14 1AF"
+      },
+      "consent": {
+        "email": false,
+        "sms": false,
+        "nextOfKin": false
+      },
+      "id": 1
+    }
+  ],
   "employee": [
     {
       "id": 1,
