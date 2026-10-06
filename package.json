@@ -12,12 +12,21 @@
   "version": "1.0.0",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "install": "npm --prefix surgery-ui ci",
+    "dev": "npm --prefix surgery-ui start",
+    "start": "npm --prefix surgery-ui start",
+    "build": "npm --prefix surgery-ui run build",
+    "test": "npm --prefix surgery-ui test",
+    "check": "npm --prefix surgery-ui run check"
   },
   "repository": {
     "type": "git",
     "url": "https://git.soton.ac.uk/comp6251-group-10/web-coursework.git"
   },
   "author": "",
-  "license": "ISC"
+  "license": "ISC",
+  "private": true,
+  "workspaces": [
+    "surgery-ui"
+  ]
 }
