@@ -1,43 +1,45 @@
 # Cloud Surgery
 
-## Design Principles
+## Design principles
+- Minimum clicks for use cases.
+- Fetch/search -> select -> CRUD form.
+- Prevent invalid actions rather than relying on error messages.
+- Enable buttons only when actions are valid.
+- Validate when helpful.
 
-- Satisfy use cases with the minimum number of clicks.
-- Fetch / Search a list -> Select an object -> CRUD form
-- Stop users from doing things rather than throwing up error messages.
-- Only enable buttons when the action is valid (e.g. mandatory fields filled in)
-- Validate fields only if it's helpful.
+## Development
 
-### `npm install`
+    npm install
+    npm start
 
-Sets up the application and downloads all dependencies.
+Patient entry: http://localhost:3000/
+Patient login: http://localhost:3000/patient/login
+Staff login: http://localhost:3000/staff/login
+Development API: port 4000
 
-### `npm start`
+Sample patient: martin@test.com / bananas
+Sample staff: smith@lostinspace.com / pain
 
-Runs the app in the development mode.\
-For patient functionality, open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+## Tests
 
-To log in as an existing patient, use martin@test.com, password = bananas.
+    npm test
+    npm run build
+    npx playwright test
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+Playwright starts the React frontend and scripts/e2e-server.js. The E2E API server loads server/db.json into memory, so browser tests do not mutate the development seed.
 
-For staff functionality, visit http://localhost:3000/staff/login.
+## Main workflows
 
-To log in as an existing member of staff, use smith@lostinspace.com, password = pain.
+Patient:
+- Login: /patient/login
+- Self-registration: /register/start
+- Appointment request: /patient/appointmentRequest
+- Password reset: /patient/password/forgot
 
+Staff:
+- Login: /staff/login
+- Appointment requests: /staff/appointmentRequests
+- Patient search: /staff/search
+- Employees: /staff/employees
 
-### `npm test`
-
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
-
-### `npm run build`
-
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
-
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
-
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+See the repository root E2E_STATUS.md for current coverage and failures.
