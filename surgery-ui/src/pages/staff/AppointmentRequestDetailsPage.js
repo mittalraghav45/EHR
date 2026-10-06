@@ -1,5 +1,5 @@
 import { useNavigate } from "react-router-dom";
-import {Button, FormControl, FormLabel, MenuItem, RadioGroup, Select, Stack, TextField} from "@mui/material";
+import {Alert, Button, FormControl, FormLabel, MenuItem, RadioGroup, Select, Stack, TextField} from "@mui/material";
 import {PageTitle} from "../../components/PageTitle";
 import {useContext, useState} from "react";
 import {StateContext} from "../../contexts/contexts";
@@ -11,8 +11,8 @@ import {useResource} from "react-request-hook";
 
 export default function AppointmentRequestDetailsPage () {
 
-    const { state, dispatch } = useContext(StateContext)
-    const { appointmentRequest, employees } = state
+    const { state } = useContext(StateContext)
+    const { appointmentRequest, employees = [] } = state
 
     const [ , createAppointment ] = useResource((data) => ({
         url: '/appointment',
@@ -31,6 +31,8 @@ export default function AppointmentRequestDetailsPage () {
     const [ appointmentSlots, setAppointmentSlots ] = useState(appointmentTimes)
     const [ appointmentDate, setAppointmentDate ] = useState(0)
     const [ appointmentTime, setAppointmentTime ] = useState(0)
+    const [ saving, setSaving ] = useState(false)
+    const [ saveError, setSaveError ] = useState("")
 
     console.log("Doctors", doctors)
     console.log("Request", appointmentRequest)
@@ -53,7 +55,10 @@ export default function AppointmentRequestDetailsPage () {
         navigate("/staff/appointmentRequests")
     }
 
-    function handleSave(event) {
+    async function handleSave(event) {
+        if (saving || !appointmentRequest || !doctors.length) return
+        setSaving(true)
+        setSaveError("")
         const selectedDate = appointmentRequest.availableDates[appointmentDate]
         const selectedTime = appointmentSlots[appointmentTime]
         const selectedDoctor = doctors[doctor]
@@ -69,10 +74,18 @@ export default function AppointmentRequestDetailsPage () {
             date: selectedDate,
             time: selectedTime
         }
-        createAppointment(data)
-        deleteAppointmentRequest()
-        console.log("Done!")
-        navigate("/staff/appointmentRequests")
+        try {
+            const appointmentResponse = await fetch("/api/appointment", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify(data) })
+            if (!appointmentResponse.ok) throw new Error("Failed to create appointment")
+            const deleteResponse = await fetch("/api/appointmentRequest/" + appointmentRequest.id, { method: "DELETE" })
+            if (!deleteResponse.ok) throw new Error("Appointment created, but the request could not be be removed.")
+            navigate("/staff/appointmentRequests")
+        } catch (error) {
+            console.error("Failed to save appointment request", error)
+            setSaveError(error.message || "Unable to save the appointment.")
+        } finally {
+            setSaving(false)
+        }
     }
 
     return (
