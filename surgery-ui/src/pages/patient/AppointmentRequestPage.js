@@ -33,8 +33,7 @@ export default function AppointmentRequestPage () {
         setCondition(event.target.value)
     }
 
-    function handleCheckbox(event, checked) {
-        const index = Number(event.target.value)
+    function handleCheckbox(index, checked) {
         setSelectedDates(current => checked
             ? current.includes(index) ? current : [...current, index]
             : current.filter(selectedIndex => selectedIndex !== index)
@@ -92,7 +91,12 @@ export default function AppointmentRequestPage () {
                     <Grid container spacing={1}>
                         { dates.map((day, index) => (
                             <Grid xs={3} key={day.persisted || day.display}>
-                                <LabelledCheckbox label={ day.display } value={ index } checked={ selectedDates.includes(index) } onChange={ handleCheckbox } />
+                                <LabelledCheckbox
+                                label={ day.display }
+                                value={ index }
+                                checked={ selectedDates.includes(index) }
+                                onChange={ (_, checked) => handleCheckbox(index, checked) }
+                            />
                             </Grid>
                         ))}
                     </Grid>
