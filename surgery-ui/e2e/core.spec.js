@@ -40,13 +40,18 @@ async function loginStaff(page) {
 }
 
 async function deleteByEmail(request, resource, email) {
-  const response = await request.get(API + "/" + resource + "?email=" + encodeURIComponent(email));
-  if (!response.ok()) return;
-  const records = await response.json();
-  for (const record of records) {
-    if (record.id !== undefined) {
-      await request.delete(API + "/" + resource + "/" + record.id);
+  try {
+    const response = await request.get(API + "/" + resource + "?email=" + encodeURIComponent(email));
+    if (!response.ok()) return;
+    const records = await response.json();
+    for (const record of records) {
+      if (record.id !== undefined) {
+        await request.delete(API + "/" + resource + "/" + record.id);
+      }
     }
+  } catch (error) {
+    // A timed-out Playwright test may close the request context before cleanup.
+    // Preserve the original test failure instead of masking it with cleanup.
   }
 }
 
@@ -97,9 +102,9 @@ test("patient can submit an appointment request", async ({page, request}) => {
   await page.locator("#appointmentType").click({force: true});
   await page.getByRole("option", {name: "Routine"}).click({force: true});
   await page.locator("#comments").fill("Playwright appointment request");
-  const firstDateCheckbox = page.locator('label:has(input[type="checkbox"])').first();
-  await firstDateCheckbox.click({force: true});
-  await expect(page.getByRole("checkbox").first()).toBeChecked();
+  const firstDateCheckbox = page.locator('input[type="checkbox"]').first();
+  await firstDateCheckbox.check({force: true});
+  await expect(firstDateCheckbox).toBeChecked();
 
   const responsePromise = page.waitForResponse(
     response => response.url().endsWith("/api/appointmentRequest") && response.request().method() === "POST"
@@ -132,7 +137,7 @@ test("patient can complete self registration", async ({page, request}) => {
     await page.locator("#title").click({force: true});
     await page.getByRole("option", {name: "Mr", exact: true}).click({force: true});
     await page.locator("#gender").click({force: true});
-    await page.getByRole("option", {name: "Male", exact: true}).click({force: true});
+    await page.getByText("Male", {exact: true}).last().click({force: true});
     await page.getByRole("button", {name: "Next"}).click({force: true});
 
     await page.locator("#street").fill("1 Playwright Street");
