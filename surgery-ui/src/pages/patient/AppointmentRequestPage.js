@@ -91,7 +91,7 @@ export default function AppointmentRequestPage () {
                     <Grid container spacing={1}>
                         { dates.map((day, index) => (
                             <Grid xs={3} key={day.persisted || day.display}>
-                                <LabelledCheckbox label={ day.display } value={ index } onChange={ handleCheckbox } />
+                                <LabelledCheckbox label={ day.display } value={ index } checked={ Boolean(day.selected) } onChange={ handleCheckbox } />
                             </Grid>
                         ))}
                     </Grid>
