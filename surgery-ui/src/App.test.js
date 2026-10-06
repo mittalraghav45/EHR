@@ -14,6 +14,6 @@ test('renders home page title', () => {
       <App />
     </BrowserRouter>
   );
-  const titleElement = screen.getByText(/Cloud Surgery Services/i);
+  const titleElement = screen.getByText(/Welcome to Cloud Surgery/i);
   expect(titleElement).toBeInTheDocument();
 });
