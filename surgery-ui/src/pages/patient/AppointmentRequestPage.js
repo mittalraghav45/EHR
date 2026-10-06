@@ -19,11 +19,11 @@ export default function AppointmentRequestPage () {
     const [ appointmentType, setAppointmentType ] = useState('')
     const [ condition, setCondition ] = useState('')
     const [ dates] = useState(getWorkingDays)
-    const [ numDays, setNumDays ] = useState(0)
+    const [ selectedDates, setSelectedDates ] = useState([])
     const [ submitting, setSubmitting ] = useState(false)
     const [ submitError, setSubmitError ] = useState("")
 
-    const mandatory = appointmentType !== "" && condition !== "" && numDays > 0
+    const mandatory = appointmentType !== "" && condition !== "" && selectedDates.length > 0
 
     function handleAppointmentType(event) {
         setAppointmentType(event.target.value)
@@ -34,10 +34,11 @@ export default function AppointmentRequestPage () {
     }
 
     function handleCheckbox(event, checked) {
-        const day = dates[Number(event.target.value)]
-        day.selected = checked
-        const count = dates.filter(day => day.selected).length
-        setNumDays(count)
+        const index = Number(event.target.value)
+        setSelectedDates(current => checked
+            ? current.includes(index) ? current : [...current, index]
+            : current.filter(selectedIndex => selectedIndex !== index)
+        )
     }
 
     function handleCancel(event) {
@@ -48,7 +49,7 @@ export default function AppointmentRequestPage () {
         if (submitting) return
         setSubmitting(true)
         setSubmitError("")
-        const selectedDays = dates.filter(day => day.selected)
+        const selectedDays = dates.filter((day, index) => selectedDates.includes(index))
         const availableDates = selectedDays.map(day => day.persisted)
         const data = {
             patientId: user.id,
@@ -91,7 +92,7 @@ export default function AppointmentRequestPage () {
                     <Grid container spacing={1}>
                         { dates.map((day, index) => (
                             <Grid xs={3} key={day.persisted || day.display}>
-                                <LabelledCheckbox label={ day.display } value={ index } checked={ Boolean(day.selected) } onChange={ handleCheckbox } />
+                                <LabelledCheckbox label={ day.display } value={ index } checked={ selectedDates.includes(index) } onChange={ handleCheckbox } />
                             </Grid>
                         ))}
                     </Grid>
