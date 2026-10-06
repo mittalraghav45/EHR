@@ -22,7 +22,7 @@ export default function SelfRegistrationAddressPhonePage () {
     const postCodeValid = postCode === "" || validator.isPostalCode(postCode, "GB")
     const postCodeError = postCodeValid ? "" : "Please enter a valid post code"
 
-    const mandatory = street !== "" && townCity !== "" && postCode !== "" && (home !== "" || mobile !== "")
+    const mandatory = street.trim() !== "" && townCity.trim() !== "" && postCode.trim() !== "" && postCodeValid && (home.trim() !== "" || mobile.trim() !== "")
     const phoneMissing = home === "" && mobile === ""
 
     useEffect(() => {
