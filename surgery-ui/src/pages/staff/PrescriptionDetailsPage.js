@@ -87,6 +87,8 @@ export default function PrescriptionDetailsPage() {
 
     return (
         <Stack direction="column">
+            <StaffOnly />
+            {isLoggedIn(state) && (
             <PageTitle title="Prescription Details" />         
             <FormLabel>Patient Id</FormLabel>
             <TextField id="patientId" value={state.patient.id}  disabled={true} />
@@ -113,6 +115,7 @@ export default function PrescriptionDetailsPage() {
             <Button onClick={ handleDelete} disabled={!deletable}>Delete</Button>
         <Button variant="outlined" onClick={handleBack}>Back</Button> 
             </Stack>
+            )}
         </Stack>
     )
 }
