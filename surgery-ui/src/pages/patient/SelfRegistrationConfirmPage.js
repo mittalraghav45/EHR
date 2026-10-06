@@ -35,7 +35,7 @@ export default function SelfRegistrationConfirmPage () {
         try {
             const hashed = encrypt(register.password)
             const patientPayload = buildPatientPayload(register, hashed)
-            const duplicateCheck = await fetch("/patient?email=" + encodeURIComponent(register.email.trim().toLowerCase()));
+            const duplicateCheck = await fetch("/api/patient?email=" + encodeURIComponent(register.email.trim().toLowerCase()));
             if (!duplicateCheck.ok) {
                 throw new Error("Failed to check existing accounts");
             }
@@ -44,7 +44,7 @@ export default function SelfRegistrationConfirmPage () {
                 throw new Error("An account already exists for this email address.");
             }
 
-            const patientResponse = await fetch("/patient", {
+            const patientResponse = await fetch("/api/patient", {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json"
@@ -59,7 +59,7 @@ export default function SelfRegistrationConfirmPage () {
             const savedPatient = await patientResponse.json()
 
             const registrationPayload = buildRegistrationPayload(register, hashed, savedPatient.id)
-            const registrationResponse = await fetch("/registration", {
+            const registrationResponse = await fetch("/api/registration", {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json"
