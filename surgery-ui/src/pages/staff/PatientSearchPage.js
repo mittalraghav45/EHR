@@ -18,7 +18,7 @@ import { StateContext } from "../../contexts/contexts";
 import StaffOnly, { isLoggedIn } from "../../components/StaffOnly";
 
 export default function PatientSearchPage() {
-  const { dispatch } = useContext(StateContext);
+  const { dispatch, state } = useContext(StateContext);
 
   const navigate = useNavigate();
 
@@ -64,7 +64,7 @@ export default function PatientSearchPage() {
       <PageTitle title="Search Patients" />
       <StaffOnly />
 
-      <Stack
+      {isLoggedIn(state) && <Stack
         direction="row"
         paddingTop={5}
         paddingBottom={5}
@@ -79,9 +79,9 @@ export default function PatientSearchPage() {
         <Button variant="contained" onClick={handleSearch}>
           Search
         </Button>
-      </Stack>
+      </Stack>}
 
-      <PatientList patients={filteredPatients}/>
+      {isLoggedIn(state) && <PatientList patients={filteredPatients}/>}
       <Stack direction="row">
         <Button variant="outlined" onClick={handleBack}>
           Back
@@ -91,9 +91,9 @@ export default function PatientSearchPage() {
   );
 }
 
-function PatientList() {
+function PatientList({ patients }) {
   const { state } = useContext(StateContext);
-  const { patients } = state;
+  const { patients = [] } = state;
   return (
     <TableContainer>
       <Table>
