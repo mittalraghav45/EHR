@@ -64,9 +64,9 @@ export default function SelfRegistrationPersonalDetailsPage () {
             }
             <Stack direction="column" spacing={1}>
                 <FormLabel>Title</FormLabel>
-                <Select id="title" value={title} onChange={handleTitle}>
+                <Select native id="title" value={title} onChange={handleTitle}>
                     { titles.map((option) => (
-                        <MenuItem key={option.value} value={option.value}>{option.label}</MenuItem>
+                        <option key={option.value} value={option.value}>{option.label}</option>
                     ))}
                 </Select>
                 <FormLabel>First Name </FormLabel>
@@ -78,9 +78,9 @@ export default function SelfRegistrationPersonalDetailsPage () {
                 <FormLabel>Date Of Birth</FormLabel>
                 <DatePicker id={"dateOfBirth"} value={dateOfBirth} onChange={handleDateOfBirth} />
                 <FormLabel>Gender</FormLabel>
-                <Select id="gender" value={gender} onChange={handleGender}>
+                <Select native id="gender" value={gender} onChange={handleGender}>
                     { genders.map((option) => (
-                        <MenuItem key={option.value} value={option.value}>{option.label}</MenuItem>
+                        <option key={option.value} value={option.value}>{option.label}</option>
                     ))}
                 </Select>
                 <Stack direction="row" spacing={1}>
