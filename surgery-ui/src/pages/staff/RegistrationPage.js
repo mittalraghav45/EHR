@@ -1,11 +1,10 @@
 import {useContext, useState} from "react";
 import {useNavigate} from "react-router-dom";
-import {InputLabel, Select, MenuItem, FormLabel, Button, Container, Stack, TextField, Typography} from "@mui/material";
+import {InputLabel, Select, MenuItem, FormLabel, Button, Container, Stack, TextField, Typography, Alert} from "@mui/material";
 import validator from "validator";
 import {StateContext} from "../../contexts/contexts";
 import {evaluatePassword} from "../../utils/passwordPolicy";
 import {encrypt} from "../../utils/encrypt";
-import {useResource} from "react-request-hook";
 import StaffOnly, {isLoggedIn} from "../../components/StaffOnly";
 
 export default function StaffRegistrationPage() {
@@ -19,6 +18,8 @@ export default function StaffRegistrationPage() {
     const [confirmPassword, setConfirmPassword] = useState("")
     const [role, setRole] = useState("")
     const [title, setTitle] = useState("")
+    const [saving, setSaving] = useState(false)
+    const [saveError, setSaveError] = useState("")
 
     const emailValid = email === "" || validator.isEmail(email)
     const emailsMatch = email === confirmEmail
@@ -27,14 +28,39 @@ export default function StaffRegistrationPage() {
     const mandatory = firstName.trim() !== "" && surname.trim() !== "" && email.trim() !== "" &&
         password !== "" && title !== "" && role !== "" && emailValid && emailsMatch && passwordsMatch && passwordPolicyMet
 
-    const [, createStaffRegistration] = useResource(data => ({url:"/employee", method:"post", data}))
+    async function handleRegister() {
+        if (saving || !mandatory) return
+        setSaving(true)
+        setSaveError("")
 
-    function handleRegister() {
-        createStaffRegistration({
-            firstName:firstName.trim(), surname:surname.trim(), email:email.trim().toLowerCase(),
-            role, title, password:encrypt(password)
-        })
-        navigate("/staff/menu")
+        const data = {
+            firstName: firstName.trim(),
+            surname: surname.trim(),
+            email: email.trim().toLowerCase(),
+            role,
+            title,
+            password: encrypt(password)
+        }
+
+        try {
+            const response = await fetch("/api/employee", {
+                method: "POST",
+                headers: {"Content-Type": "application/json"},
+                body: JSON.stringify(data)
+            })
+
+            if (!response.ok) {
+                throw new Error("Unable to create employee")
+            }
+
+            await response.json()
+            navigate("/staff/employees")
+        } catch (error) {
+            console.error("Staff registration failed", error)
+            setSaveError(error.message || "Unable to create employee.")
+        } finally {
+            setSaving(false)
+        }
     }
 
     return (
@@ -43,6 +69,7 @@ export default function StaffRegistrationPage() {
             {isLoggedIn(state) && (
                 <Stack direction="column" spacing={1}>
                     <Typography spacing={2} color="textSecondary" variant="h4">Staff Registration</Typography>
+                    {saveError && <Alert severity="error">{saveError}</Alert>}
                     <InputLabel id="title-label">Title</InputLabel>
                     <Select labelId="title-label" id="title" value={title} onChange={e=>setTitle(e.target.value)}>
                         <MenuItem value="Mr">Mr</MenuItem><MenuItem value="Mrs">Mrs</MenuItem><MenuItem value="Dr">Dr</MenuItem>
@@ -64,8 +91,10 @@ export default function StaffRegistrationPage() {
                         <MenuItem value="Nurse">Nurse</MenuItem><MenuItem value="Doctor">Doctor</MenuItem><MenuItem value="Administrator">Administrator</MenuItem>
                     </Select>
                     <Stack direction="row" spacing={1}>
-                        <Button variant="outlined" onClick={() => navigate("/staff/menu")}>Cancel</Button>
-                        <Button variant="contained" onClick={handleRegister} disabled={!mandatory}>Register</Button>
+                        <Button variant="outlined" onClick={() => navigate("/staff/menu")} disabled={saving}>Cancel</Button>
+                        <Button variant="contained" onClick={handleRegister} disabled={!mandatory || saving}>
+                            {saving ? "Registering..." : "Register"}
+                        </Button>
                     </Stack>
                 </Stack>
             )}
