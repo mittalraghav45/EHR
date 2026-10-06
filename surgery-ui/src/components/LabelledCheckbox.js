@@ -4,7 +4,13 @@ export function LabelledCheckbox({ label, value, checked = false, onChange }) {
     return (
         <FormControlLabel
             label={label}
-            control={<Checkbox value={value} checked={checked} onChange={onChange}/>}
+            control={
+                <Checkbox
+                    value={value}
+                    checked={checked}
+                    onChange={(event, nextChecked) => onChange(event, nextChecked)}
+                />
+            }
         />
     )
 }
