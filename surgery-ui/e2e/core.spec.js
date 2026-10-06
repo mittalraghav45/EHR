@@ -134,11 +134,8 @@ test("patient can complete self registration", async ({page, request}) => {
     await page.locator("#confirmPassword").fill("Playwright1!");
     await page.getByRole("button", {name: "Next"}).click({force: true});
 
-    await page.locator("#title").click({force: true});
-    await page.getByRole("option", {name: "Mr", exact: true}).click({force: true});
-    await page.locator("#gender").click({force: true});
-    await page.keyboard.press("ArrowDown");
-    await page.keyboard.press("Enter");
+    await page.locator("#title").selectOption("Mr");
+    await page.locator("#gender").selectOption("Male");
     await page.getByRole("button", {name: "Next"}).click({force: true});
 
     await page.locator("#street").fill("1 Playwright Street");
@@ -306,8 +303,7 @@ test("staff can create a new employee", async ({page, request}) => {
     await page.getByRole("button", {name: "Employees"}).click({force: true});
     await page.getByRole("button", {name: "Add"}).click({force: true});
 
-    await page.locator("#title").click({force: true});
-    await page.getByRole("option", {name: "Mr", exact: true}).click({force: true});
+    await page.locator("#title").selectOption("Mr");
     await page.locator("#firstName").fill("Playwright");
     await page.locator("#surname").fill("Staff");
     await page.locator("#email").fill(email);
