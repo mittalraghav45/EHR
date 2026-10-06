@@ -6,9 +6,7 @@ export function LabelledCheckbox({ label, value, checked = false, onChange }) {
     }
 
     function handleClick(event) {
-        if (event.target === event.currentTarget) {
-            onChange(event, event.currentTarget.checked)
-        }
+        onChange(event, event.currentTarget.checked)
     }
 
     return (
