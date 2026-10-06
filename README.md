@@ -1,89 +1,128 @@
-Application User Guide
+# Cloud Surgery EHR
 
-Browser Entry Points
+Cloud Surgery is a React-based electronic health-record application providing separate patient and staff portals.
 
-Patient Entry
-• URL: http://localhost:3000/
-• Component: HomePage in HomePage.js
-• Description: Patient-facing entry with buttons for patient login or self-registration flow
+## Stack
 
-Staff Entry
-• URL: http://localhost:3000/staff/login
-• Route Map: PageContent.js
-• Note: No staff link is shown on the home page, so browse directly to this URL
+- React 18
+- Material UI
+- React Router
+- json-server development backend
+- Axios / react-request-hook for application data access
+- Jest + React Testing Library
+- Playwright Chromium E2E
+- GitHub Actions CI
 
+## Local development
 
-Patient Journey
+Requirements: Node.js 20 and npm.
 
-Login & Main Menu
-• Login URL: /patient/login
-• On successful login, users land on the Patient Menu Page (PatientMenuPage)
-• Sample credentials from README.md: martin@test.com / bananas
+From the repository root:
 
-Available Features
-The patient menu provides access to the following features:
+```bash
+npm install
+npm start
+```
 
-• Update Details (/patient/details)
-• Request Appointment (/patient/appointmentRequest)
-• View Appointments (/patient/appointments)
-• Medical History (/patient/medicalhistory)
-• Prescriptions (/patient/prescriptions)
-• Test Details (/patient/tests)
-• Log Out (returns to /)
+The UI is available at `http://localhost:3000`. The development json-server listens on port 4000. The React proxy maps `/api/*` to that backend.
 
-Self-Registration Flow
-All registration buttons are on-page:
+Useful verification commands:
 
-1. Start: /register/start
-2. Personal Info: /register/personal
-3. Contact Info: /register/contact
-4. Consent: /register/consent
-5. Confirmation: /register/confirm
-6. Submit: Returns to /
+```bash
+npm test
+npm run build
+cd surgery-ui
+npx playwright test
+```
 
-Navigation Notes
-• Back buttons on patient pages always return to the patient menu
-• Cancel buttons on login/registration return to /
+## Patient portal
 
+Entry: `/patient/login`
 
-Staff Journey
+A successful patient login opens `/patient/menu`, where the patient can:
 
-Login & Main Menu
-• Login URL: /staff/login
-• On successful login, users go to the Staff Menu (StaffMenuPage)
-• Sample credentials from README.md: smith@lostinspace.com / pain
+- Update personal details
+- Request an appointment
+- View appointments
+- View medical history
+- View prescriptions
+- View test details
+- Log out
 
-Available Features
-The staff menu provides access to:
+Appointment requests contain an appointment type, symptoms/condition and one or more available working days. Submission waits for the backend POST to succeed before returning to the patient menu.
 
-• Appointment Requests (/staff/appointmentRequests)
-• Registration Requests (/staff/registrations)
-• Search Patient (/staff/search)
-• My Appointments (/staff/appointments)
-• Employees (/staff/employees)
-• Log Out (returns to /)
+### Self-registration
 
-Working with Appointment Requests
-1. From Appointment Requests, click "View" to open the request detail at /staff/appointmentRequest
-2. Pick doctor, date, and time
-3. Click "Save" to create the appointment and return
+The registration flow is:
 
-Working with Patient Search
-1. From Search Patient, click "View" to open patient details at /staff/patient
-2. Patient details page has buttons to jump to:
-   • Medical History (/staff/medicalhistory)
-   • Prescriptions (/staff/prescriptions)
-   • Tests (/staff/tests)
+1. `/register/start`
+2. `/register/personal`
+3. `/register/contact`
+4. `/register/consent`
+5. `/register/confirm`
 
-Staff Registration
-• Registration Form: /staff/register (if you need to create staff users)
-• Employees and Registration Requests pages list existing records with on-page controls to view/approve
+The confirmation step checks for an existing patient email before creating the account.
 
+### Password reset
 
+Patient password reset starts at `/patient/password/forgot` and completes at `/patient/password/reset`.
 
+## Staff portal
 
+Entry: `/staff/login`
 
+Sample development staff credentials in `surgery-ui/server/db.json`:
 
+- Email: `smith@lostinspace.com`
+- Password: `pain`
 
+After login, staff reach `/staff/menu` with access to:
 
+- Appointment requests
+- Registration requests
+- Patient search
+- Today's appointments
+- Employees
 
+Staff-only routes are protected by the staff role guard. Unauthenticated or patient users receive an access message instead of staff content.
+
+### Appointment requests
+
+Staff open `/staff/appointmentRequests`, select a request, then open `/staff/appointmentRequest`. Approval requires a doctor, date and time and persists the appointment before removing the request.
+
+### Patient search and records
+
+Staff search patients at `/staff/search`. Patient details link to medical history, prescriptions and tests. These staff record-management pages are protected from patient/anonymous access.
+
+### Staff registration
+
+Staff registration is available at `/staff/register`. Roles are restricted to Doctor, Nurse and Administrator and required registration fields are validated before submission.
+
+## Development backend
+
+The application currently uses json-server rather than a production API service.
+
+- Database: `surgery-ui/server/db.json`
+- Route aliases: `surgery-ui/server/routes.json`
+- Proxy: `surgery-ui/src/setupProxy.js`
+
+The seeded database is development data only. Do not use it as a production clinical-data store.
+
+## Testing and CI
+
+GitHub Actions runs:
+
+1. Dependency installation
+2. React unit tests
+3. Production build
+4. Playwright installation
+5. Chromium installation
+6. Playwright browser tests
+
+The Playwright suite covers critical patient login/appointment-request behaviour, staff login, and staff-route access control. E2E failures are intended to block CI.
+
+## Security and session behaviour
+
+The application maintains client-side session state and has explicit patient/staff route guards. Session expiry redirects to the relevant login screen with feedback.
+
+This repository is a development/academic application. It should not be treated as production-ready clinical infrastructure without replacing the development backend, strengthening authentication/authorization, protecting sensitive data, adding audit controls, and completing a production security review.
