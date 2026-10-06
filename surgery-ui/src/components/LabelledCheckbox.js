@@ -8,7 +8,7 @@ export function LabelledCheckbox({ label, value, checked = false, onChange }) {
                 <Checkbox
                     value={value}
                     checked={checked}
-                    onChange={(event) => onChange(event, event.currentTarget.checked)}
+                    onChange={(event) => onChange(event, event.target.checked)}
                 />
             }
         />
