@@ -1,13 +1,12 @@
 import {Alert, Button} from "@mui/material";
 import {useCallback, useContext, useEffect, useState} from "react";
-import {useNavigate} from "react-router-dom";
+
 import {StateContext} from "../contexts/contexts";
 import {SESSION_DURATION_MS, SESSION_WARNING_MS} from "../constants/session";
 
 export function SessionManager() {
 
     const { state, dispatch } = useContext(StateContext)
-    const navigate = useNavigate()
 
     const { user, session } = state
     const loggedIn = user && user.role && user.role !== "none"
@@ -40,11 +39,11 @@ export function SessionManager() {
                 clearInterval(interval)
                 const target = user.role === "patient" ? "/patient/login" : "/staff/login"
                 dispatch({ type: "LOGOUT" })
-                navigate(target, { state: { sessionExpired: true } })
+                window.location.assign(target + "?sessionExpired=true")
             }
         }, 1000)
         return () => clearInterval(interval)
-    }, [session.expiresAt, dispatch, navigate, loggedIn, user.role])
+    }, [session.expiresAt, dispatch, loggedIn, user.role])
 
     if (!loggedIn || timeLeft === null || timeLeft > SESSION_WARNING_MS) {
         return null
