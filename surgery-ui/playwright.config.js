@@ -14,11 +14,22 @@ module.exports = defineConfig({
     video: "retain-on-failure"
   },
   projects: [{name: "chromium", use: {...devices["Desktop Chrome"]}}],
-  webServer: {
-    command: "npm run start",
-    cwd: __dirname,
-    url: "http://127.0.0.1:3000",
-    reuseExistingServer: !process.env.CI,
-    timeout: 120000
-  }
+  webServer: [
+    {
+      command: "npm run client",
+      cwd: __dirname,
+      url: "http://127.0.0.1:3000",
+      name: "Frontend",
+      reuseExistingServer: !process.env.CI,
+      timeout: 120000
+    },
+    {
+      command: "npm run db:e2e",
+      cwd: __dirname,
+      url: "http://127.0.0.1:4000/patient",
+      name: "E2E API",
+      reuseExistingServer: !process.env.CI,
+      timeout: 120000
+    }
+  ]
 });
