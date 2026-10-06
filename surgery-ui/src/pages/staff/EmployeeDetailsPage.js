@@ -1,12 +1,13 @@
 import {useNavigate} from "react-router-dom";
 import {Button, FormLabel, MenuItem, Select, Stack, TextField} from "@mui/material";
 import {PageTitle} from "../../components/PageTitle";
-import {Fragment, useContext, useEffect, useState} from "react";
+import {Fragment, useContext, useState} from "react";
 import {StateContext} from "../../contexts/contexts";
 import {useResource} from "react-request-hook";
 import {roles, titles} from "../../utils/dropdownLists";
 import validator from "validator";
 import {encrypt} from "../../utils/encrypt";
+import StaffOnly, {isLoggedIn} from "../../components/StaffOnly";
 
 export default function EmployeeDetailsPage() {
 
@@ -58,40 +59,17 @@ export default function EmployeeDetailsPage() {
         data: updatedEmployee
     }))
     
-    function handleTitle(event) {
-        setTitle(event.target.value)
-    }
-
-    function handleFirstName(event) {
-        setFirstName(event.target.value)
-    }
-
-    function handleSurname(event) {
-        setSurname(event.target.value)
-    }
-
-    function handleEmail(event) {
-        setEmail(event.target.value)
-    }
-
-    function handlePassword(event) {
-        setPassword(event.target.value)
-    }
-
-    function handleConfirmPassword(event) {
-        setConfirmPassword(event.target.value)
-    }
-
-    function handleRole(event) {
-        setRole(event.target.value)
-    }
+    function handleTitle(event) { setTitle(event.target.value) }
+    function handleFirstName(event) { setFirstName(event.target.value) }
+    function handleSurname(event) { setSurname(event.target.value) }
+    function handleEmail(event) { setEmail(event.target.value) }
+    function handlePassword(event) { setPassword(event.target.value) }
+    function handleConfirmPassword(event) { setConfirmPassword(event.target.value) }
+    function handleRole(event) { setRole(event.target.value) }
 
     function handleSave(event) {
-        if (isNew) {
-            createEmployee()
-        } else {
-            updateEmployee()
-        }
+        if (isNew) createEmployee()
+        else updateEmployee()
         navigate("/staff/employees")
     }
 
@@ -108,41 +86,42 @@ export default function EmployeeDetailsPage() {
         <Stack direction="column">
             <StaffOnly />
             {isLoggedIn(state) && (
-            <PageTitle title="Employee Details" />
-            <FormLabel>Title</FormLabel>
-            <Select id="title" value={title} onChange={handleTitle}>
-                { titles.map((option) => (
-                    <MenuItem key={option.value} value={option.value}>{option.label}</MenuItem>
-                ))}
-            </Select>
-            <FormLabel>First Name </FormLabel>
-            <TextField id="firstName" value={firstName} onChange={handleFirstName} />
-            <FormLabel>Family / Surname</FormLabel>
-            <TextField id="surname" value={surname} onChange={handleSurname} />
-            <FormLabel>Email Address </FormLabel>
-            <TextField id="email" value={email} onChange={handleEmail}
-                       error={!emailValid} helperText={emailError} />
-            { isNew && (
-                <Fragment>
-                    <FormLabel>New Password</FormLabel>
-                    <TextField id="password" value={password} type="password" onChange={handlePassword} />
-                    <FormLabel>Confirm New Password</FormLabel>
-                    <TextField id="confirmPassword" value={confirmPassword} type="password" onChange={handleConfirmPassword}
-                           error={!passwordsMatch} helperText={passwordError} />
-                </Fragment>
-                )
-            }
-            <FormLabel>Role</FormLabel>
-            <Select id="role" value={role} onChange={handleRole}>
-                { roles.map((option) => (
-                    <MenuItem key={option.value} value={option.value}>{option.label}</MenuItem>
-                ))}
-            </Select>
-            <Stack direction="row">
-                <Button onClick={ handleSave } disabled={ !mandatory }>Save</Button>
-                <Button onClick={ handleDelete } disabled={ !deletable }>Delete</Button>
-                <Button variant="outlined" onClick={handleCancel}>Cancel</Button>
-            </Stack>
+                <>
+                    <PageTitle title="Employee Details" />
+                    <FormLabel>Title</FormLabel>
+                    <Select id="title" value={title} onChange={handleTitle}>
+                        { titles.map((option) => (
+                            <MenuItem key={option.value} value={option.value}>{option.label}</MenuItem>
+                        ))}
+                    </Select>
+                    <FormLabel>First Name </FormLabel>
+                    <TextField id="firstName" value={firstName} onChange={handleFirstName} />
+                    <FormLabel>Family / Surname</FormLabel>
+                    <TextField id="surname" value={surname} onChange={handleSurname} />
+                    <FormLabel>Email Address </FormLabel>
+                    <TextField id="email" value={email} onChange={handleEmail}
+                               error={!emailValid} helperText={emailError} />
+                    { isNew && (
+                        <Fragment>
+                            <FormLabel>New Password</FormLabel>
+                            <TextField id="password" value={password} type="password" onChange={handlePassword} />
+                            <FormLabel>Confirm New Password</FormLabel>
+                            <TextField id="confirmPassword" value={confirmPassword} type="password" onChange={handleConfirmPassword}
+                                   error={!passwordsMatch} helperText={passwordError} />
+                        </Fragment>
+                    )}
+                    <FormLabel>Role</FormLabel>
+                    <Select id="role" value={role} onChange={handleRole}>
+                        { roles.map((option) => (
+                            <MenuItem key={option.value} value={option.value}>{option.label}</MenuItem>
+                        ))}
+                    </Select>
+                    <Stack direction="row">
+                        <Button onClick={handleSave} disabled={!mandatory}>Save</Button>
+                        <Button onClick={handleDelete} disabled={!deletable}>Delete</Button>
+                        <Button variant="outlined" onClick={handleCancel}>Cancel</Button>
+                    </Stack>
+                </>
             )}
         </Stack>
     )
