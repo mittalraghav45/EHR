@@ -107,9 +107,9 @@ export default function EmployeeDetailsPage() {
                     <PageTitle title="Employee Details" />
                     {saveError && <Alert severity="error">{saveError}</Alert>}
                     <FormLabel>Title</FormLabel>
-                    <Select id="title" value={title} onChange={event => setTitle(event.target.value)}>
+                    <Select native id="title" value={title} onChange={event => setTitle(event.target.value)}>
                         { titles.map((option) => (
-                            <MenuItem key={option.value} value={option.value}>{option.label}</MenuItem>
+                            <option key={option.value} value={option.value}>{option.label}</option>
                         ))}
                     </Select>
                     <FormLabel>First Name </FormLabel>
@@ -129,9 +129,9 @@ export default function EmployeeDetailsPage() {
                         </Fragment>
                     )}
                     <FormLabel>Role</FormLabel>
-                    <Select id="role" value={role} onChange={event => setRole(event.target.value)}>
+                    <Select native id="role" value={role} onChange={event => setRole(event.target.value)}>
                         { roles.map((option) => (
-                            <MenuItem key={option.value} value={option.value}>{option.label}</MenuItem>
+                            <option key={option.value} value={option.value}>{option.label}</option>
                         ))}
                     </Select>
                     <Stack direction="row">
