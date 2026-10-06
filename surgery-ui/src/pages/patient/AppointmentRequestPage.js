@@ -23,12 +23,6 @@ export default function AppointmentRequestPage () {
     const [ submitting, setSubmitting ] = useState(false)
     const [ submitError, setSubmitError ] = useState("")
 
-    const [ , createAppointmentRequest ] = useResource((data) => ({
-        url: '/appointmentRequest',
-        method: 'post',
-        data: data
-    }))
-
     const mandatory = appointmentType !== "" && condition !== "" && numDays > 0
 
     function handleAppointmentType(event) {
@@ -96,7 +90,7 @@ export default function AppointmentRequestPage () {
                     {submitError && <Alert severity="error">{submitError}</Alert>}
                     <Grid container spacing={1}>
                         { dates.map((day, index) => (
-                            <Grid xs={3}>
+                            <Grid xs={3} key={day.persisted || day.display}>
                                 <LabelledCheckbox label={ day.display } value={ index } onChange={ handleCheckbox } />
                             </Grid>
                         ))}
