@@ -299,7 +299,7 @@ test("staff can create a new employee", async ({page, request}) => {
     await page.getByRole("button", {name: "Add"}).click({force: true});
 
     await page.locator("#title").click({force: true});
-    await page.getByRole("option", {name: "Mr"}).click({force: true});
+    await page.getByRole("option", {name: "Mr", exact: true}).click({force: true});
     await page.locator("#firstName").fill("Playwright");
     await page.locator("#surname").fill("Staff");
     await page.locator("#email").fill(email);
