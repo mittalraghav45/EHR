@@ -97,7 +97,9 @@ test("patient can submit an appointment request", async ({page, request}) => {
   await page.locator("#appointmentType").click({force: true});
   await page.getByRole("option", {name: "Routine"}).click({force: true});
   await page.locator("#comments").fill("Playwright appointment request");
-  await page.getByRole("checkbox").first().check({force: true});
+  const firstDateCheckbox = page.locator('label:has(input[type="checkbox"])').first();
+  await firstDateCheckbox.click({force: true});
+  await expect(page.getByRole("checkbox").first()).toBeChecked();
 
   const responsePromise = page.waitForResponse(
     response => response.url().endsWith("/api/appointmentRequest") && response.request().method() === "POST"
@@ -131,7 +133,7 @@ test("patient can complete self registration", async ({page, request}) => {
     await page.locator("#title").click({force: true});
     await page.getByRole("option", {name: "Mr", exact: true}).click({force: true});
     await page.locator("#gender").click({force: true});
-    await page.getByRole("option", {name: "Male"}).click({force: true});
+    await page.getByRole("option", {name: "Male", exact: true}).click({force: true});
     await page.getByRole("button", {name: "Next"}).click({force: true});
 
     await page.locator("#street").fill("1 Playwright Street");
