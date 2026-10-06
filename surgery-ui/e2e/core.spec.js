@@ -278,7 +278,7 @@ test("staff can approve a patient appointment request", async ({page, request}) 
     const appointmentPost = page.waitForResponse(
       response => response.url().endsWith("/api/appointment") && response.request().method() === "POST"
     );
-    await page.getByRole("button", {name: "Register"}).click({force: true});
+    await page.getByRole("button", {name: "Save"}).click({force: true});
     const response = await appointmentPost;
     expect(response.ok()).toBeTruthy();
     const appointment = await response.json();
