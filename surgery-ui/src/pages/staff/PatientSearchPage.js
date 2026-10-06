@@ -15,6 +15,7 @@ import { useNavigate } from "react-router-dom";
 import { useResource } from "react-request-hook";
 import { AlternatingTableRow } from "../../components/AlternatingTableRow";
 import { StateContext } from "../../contexts/contexts";
+import StaffOnly, { isLoggedIn } from "../../components/StaffOnly";
 
 export default function PatientSearchPage() {
   const { dispatch } = useContext(StateContext);
@@ -61,6 +62,7 @@ export default function PatientSearchPage() {
   return (
     <Stack direction="column">
       <PageTitle title="Search Patients" />
+      <StaffOnly />
 
       <Stack
         direction="row"
