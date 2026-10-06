@@ -40,7 +40,7 @@ import ViewRegistrationRequestsPage from "../pages/staff/ViewRegistrationRequest
 import ApproveRegistrationRequestPage from "../pages/staff/ApproveRegistrationRequestPage";
 import ViewAppointmentRequestsPage from "../pages/staff/ViewAppointmentRequestsPage";
 
-import {BrowserRouter as Router, Navigate, Route, Routes} from "react-router-dom";
+import {Navigate, Route, Routes} from "react-router-dom";
 import React from "react";
 import {Container} from "@mui/material";
 import TodaysAppointmentsPage from "../pages/staff/TodaysAppointmentsPage";
@@ -49,8 +49,7 @@ import AppointmentDetailsPage from "../pages/staff/AppointmentDetailsPage";
 export function PageContent() {
     return (
         <Container>
-            <Router>
-                <Routes>
+            <Routes>
                     <Route path="/" element={<HomePage />} />
                     <Route path="/patient/register" element={<Navigate to="/register/start" replace />} />
                     <Route path="/patient/appointmentRequest" element={<AppointmentRequestPage />} />
@@ -90,8 +89,7 @@ export function PageContent() {
                     <Route path="/staff/testdetail" element={<TestDetailsPage />} />
                     <Route path="/staff/medicalhistory" element={<MedicalHistoryPage />} />
                     <Route path="/staff/medicalhistorydetail" element={<MedicalHistoryDetails />} />
-                </Routes>
-            </Router>
+            </Routes>
         </Container>
     )
 }
