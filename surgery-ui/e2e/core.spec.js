@@ -1,6 +1,8 @@
 const {test, expect} = require("@playwright/test");
 
 test("patient can log in and reach the portal", async ({page}) => {
+  page.on("pageerror", error => console.log("PAGE_ERROR:", error.message));
+  page.on("console", message => { if (message.type() === "error") console.log("CONSOLE_ERROR:", message.text()); });
   await page.goto("/patient/login");
   await page.locator("#userName").fill("martin@test.com");
   await page.locator("#password").fill("bananas");
