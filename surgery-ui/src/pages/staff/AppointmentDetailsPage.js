@@ -49,6 +49,8 @@ export default function AppointmentDetailsPage () {
 
     return (
         <Stack direction="column">
+            <StaffOnly />
+            {isLoggedIn(state) && (
             <PageTitle title="Appointment Details" />
             <TableContainer>
                 <Table>
@@ -77,6 +79,7 @@ export default function AppointmentDetailsPage () {
                 <Button onClick={handlePatient}>Patient Details</Button>
                 <Button variant="outlined" onClick={handleBack}>Back</Button>
             </Stack>
+            )}
         </Stack>
     )
 }
