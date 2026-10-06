@@ -33,9 +33,9 @@ export default function AppointmentRequestPage () {
         setCondition(event.target.value)
     }
 
-    function handleCheckbox(event) {
-        const day = dates[event.target.value]
-        day.selected = event.target.checked
+    function handleCheckbox(event, checked) {
+        const day = dates[Number(event.target.value)]
+        day.selected = checked
         const count = dates.filter(day => day.selected).length
         setNumDays(count)
     }
