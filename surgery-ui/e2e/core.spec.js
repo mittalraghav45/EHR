@@ -309,8 +309,7 @@ test("staff can create a new employee", async ({page, request}) => {
     await page.locator("#email").fill(email);
     await page.locator("#password").fill("Playwright1!");
     await page.locator("#confirmPassword").fill("Playwright1!");
-    await page.locator("#role").click({force: true});
-    await page.getByRole("option", {name: "Nurse"}).click({force: true});
+    await page.locator("#role").selectOption("Nurse");
 
     const createResponse = page.waitForResponse(
       response => response.url().endsWith("/api/employee") && response.request().method() === "POST"
