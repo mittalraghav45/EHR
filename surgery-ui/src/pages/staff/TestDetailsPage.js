@@ -98,6 +98,8 @@ console.log('state ',state);
 
     return (
         <Stack direction="column">
+            <StaffOnly />
+            {isLoggedIn(state) && (
             <PageTitle title="Test Details" /> 
 
             <FormLabel>Patient Id</FormLabel>
@@ -129,6 +131,7 @@ console.log('state ',state);
                  <Button onClick={ handleDelete } disabled={!deletable}>Delete</Button>
                 <Button variant="outlined" onClick={handleBack}>Back</Button> 
             </Stack>
+            )}
         </Stack>
     )
 }
