@@ -5,10 +5,11 @@ import {useResource} from "react-request-hook";
 import {StateContext} from "../../contexts/contexts";
 import {PageTitle} from "../../components/PageTitle";
 import {AlternatingTableRow} from "../../components/AlternatingTableRow";
+import StaffOnly, { isLoggedIn } from "../../components/StaffOnly";
 
 export default function ViewAppointmentRequestsPage () {
 
-    const { dispatch } = useContext(StateContext)
+    const { dispatch, state } = useContext(StateContext)
 
     const navigate = useNavigate()
 
@@ -36,7 +37,8 @@ export default function ViewAppointmentRequestsPage () {
     return (
         <Stack direction="column">
             <PageTitle title="View Appointment Requests" />
-            <AppointmentRequestList />
+            <StaffOnly />
+            { isLoggedIn(state) && <AppointmentRequestList /> }
             <Stack direction="row">
                 <Button variant="outlined" onClick={handleBack}>Back</Button>
             </Stack>
