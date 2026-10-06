@@ -72,6 +72,8 @@ export default function MedicalHistoryDetails() {
 
     return (
         <Stack direction="column">
+            <StaffOnly />
+            {isLoggedIn(state) && (
             <PageTitle title="Medical History Details" /> 
 
             <FormLabel>Patient Id</FormLabel>
@@ -94,6 +96,7 @@ export default function MedicalHistoryDetails() {
                   <Button onClick={ handleDelete } disabled={!deletable}>Delete</Button>
                 <Button variant="outlined" onClick={handleBack}>Back</Button> 
             </Stack>
+            )}
         </Stack>
     )
 }
