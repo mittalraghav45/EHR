@@ -7,6 +7,7 @@ import AppointmentRequest from "../../components/AppointmentRequest";
 import {LabelledRadioButton} from "../../components/LabelledRadioButton";
 import {getFullName} from "../../utils/builders";
 import {appointmentTimes, displayDate} from "../../utils/workingDays";
+import StaffOnly, {isLoggedIn} from "../../components/StaffOnly";
 
 export default function AppointmentRequestDetailsPage () {
     const { state } = useContext(StateContext)
@@ -72,39 +73,44 @@ export default function AppointmentRequestDetailsPage () {
     return (
         <Stack direction="column">
             <PageTitle title="Appointment Request" />
-            <AppointmentRequest />
-            {!hasRequest && (
-                <Alert severity="info">No appointment request is selected. Return to the appointment requests list and choose a request.</Alert>
-            )}
-            {hasRequest && (
+            <StaffOnly />
+            {isLoggedIn(state) && (
                 <>
-                    <FormLabel>Doctor</FormLabel>
-                    <Select id="doctor" value={doctor} onChange={(event) => setDoctor(event.target.value)}>
-                        {doctors.map((employee, index) => (
-                            <MenuItem key={employee.id} value={index}>{getFullName(employee)}</MenuItem>
-                        ))}
-                    </Select>
-                    <FormControl>
-                        <FormLabel>Available Dates</FormLabel>
-                        <RadioGroup name="available-dates" row defaultValue="0" onChange={(event) => setAppointmentDate(event.target.value)}>
-                            {appointmentRequest.availableDates.map((date, index) => (
-                                <LabelledRadioButton key={date + "-" + index} value={index} label={displayDate(date)} />
-                            ))}
-                        </RadioGroup>
-                    </FormControl>
-                    <FormControl>
-                        <FormLabel>Available Times</FormLabel>
-                        <RadioGroup name="available-times" row defaultValue="0" onChange={(event) => setAppointmentTime(event.target.value)}>
-                            {appointmentSlots.map((time, index) => (
-                                <LabelledRadioButton key={time + "-" + index} value={index} label={time} />
-                            ))}
-                        </RadioGroup>
-                    </FormControl>
-                    {saveError && <Alert severity="error">{saveError}</Alert>}
-                    <Stack direction="row">
-                        <Button disabled={saving || !doctors.length} onClick={handleSave}>{saving ? "Saving..." : "Save"}</Button>
-                        <Button variant="outlined" onClick={handleBack}>Back</Button>
-                    </Stack>
+                    <AppointmentRequest />
+                    {!hasRequest && (
+                        <Alert severity="info">No appointment request is selected. Return to the appointment requests list and choose a request.</Alert>
+                    )}
+                    {hasRequest && (
+                        <>
+                            <FormLabel>Doctor</FormLabel>
+                            <Select id="doctor" value={doctor} onChange={(event) => setDoctor(event.target.value)}>
+                                {doctors.map((employee, index) => (
+                                    <MenuItem key={employee.id} value={index}>{getFullName(employee)}</MenuItem>
+                                ))}
+                            </Select>
+                            <FormControl>
+                                <FormLabel>Available Dates</FormLabel>
+                                <RadioGroup name="available-dates" row defaultValue="0" onChange={(event) => setAppointmentDate(event.target.value)}>
+                                    {appointmentRequest.availableDates.map((date, index) => (
+                                        <LabelledRadioButton key={date + "-" + index} value={index} label={displayDate(date)} />
+                                    ))}
+                                </RadioGroup>
+                            </FormControl>
+                            <FormControl>
+                                <FormLabel>Available Times</FormLabel>
+                                <RadioGroup name="available-times" row defaultValue="0" onChange={(event) => setAppointmentTime(event.target.value)}>
+                                    {appointmentSlots.map((time, index) => (
+                                        <LabelledRadioButton key={time + "-" + index} value={index} label={time} />
+                                    ))}
+                                </RadioGroup>
+                            </FormControl>
+                            {saveError && <Alert severity="error">{saveError}</Alert>}
+                            <Stack direction="row">
+                                <Button disabled={saving || !doctors.length} onClick={handleSave}>{saving ? "Saving..." : "Save"}</Button>
+                                <Button variant="outlined" onClick={handleBack}>Back</Button>
+                            </Stack>
+                        </>
+                    )}
                 </>
             )}
         </Stack>
