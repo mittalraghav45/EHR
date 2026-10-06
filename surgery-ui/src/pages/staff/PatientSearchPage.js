@@ -44,6 +44,8 @@ export default function PatientSearchPage() {
     navigate("/staff/menu");
   }
 
+  const statePatients = state.patients || [];
+
   const filteredPatients = useMemo(() => {
     const query = searchTerm.trim().toLowerCase();
     if (!query) return statePatients;
@@ -91,9 +93,7 @@ export default function PatientSearchPage() {
   );
 }
 
-function PatientList({ patients }) {
-  const { state } = useContext(StateContext);
-  const { patients = [] } = state;
+function PatientList({ patients = [] }) {
   return (
     <TableContainer>
       <Table>
