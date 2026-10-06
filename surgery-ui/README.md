@@ -1,12 +1,5 @@
 # Cloud Surgery
 
-## Design principles
-- Minimum clicks for use cases.
-- Fetch/search -> select -> CRUD form.
-- Prevent invalid actions rather than relying on error messages.
-- Enable buttons only when actions are valid.
-- Validate when helpful.
-
 ## Development
 
     npm install
@@ -35,11 +28,20 @@ Patient:
 - Self-registration: /register/start
 - Appointment request: /patient/appointmentRequest
 - Password reset: /patient/password/forgot
+- Portal records: appointments, medical history, prescriptions, tests
 
 Staff:
 - Login: /staff/login
 - Appointment requests: /staff/appointmentRequests
 - Patient search: /staff/search
 - Employees: /staff/employees
+- Registration requests: /staff/registrations
 
-See the repository root E2E_STATUS.md for current coverage and failures.
+## Current E2E status
+
+The critical suite has 11 tests. The latest completed CI run passed 8 and failed 3:
+- appointment-date checkbox state
+- patient self-registration
+- staff employee creation
+
+See root `HANDOFF.md`, `PROJECT_STATUS.md` and `E2E_STATUS.md` for continuation instructions.

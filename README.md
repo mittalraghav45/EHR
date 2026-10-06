@@ -1,20 +1,27 @@
 # Cloud Surgery EHR
 
-Cloud Surgery is a React-based electronic-health-record application providing separate patient and staff portals.
+Cloud Surgery is a React-based electronic-health-record application with separate patient and staff portals.
 
-## Current project status
+## Current status
 
-The active application is surgery-ui/. Unit tests and the production build are passing in GitHub Actions. Playwright Chromium E2E is the current release gate and is being expanded across the documented patient/staff workflows.
+**Core application functional; Playwright release gate is not yet green.**
 
-Latest known state:
-- Unit tests: passing
+Latest completed GitHub Actions run:
+- Run #80
+- Jest: passing
 - Production build: passing
-- Playwright: running on the latest commit
-- The previous completed Playwright run had 7 passing and 4 failing tests; remaining failures are being fixed rather than hidden.
+- Playwright: **8 passing / 3 failing**
+- No CI run currently active
 
-See E2E_STATUS.md for the detailed handoff and failure history.
+Remaining E2E failures:
+1. patient appointment-date checkbox state;
+2. patient self-registration timeout;
+3. staff employee-registration timeout.
+
+Read `HANDOFF.md`, `PROJECT_STATUS.md` and `E2E_STATUS.md` before continuing work.
 
 ## Stack
+
 - React 18
 - Material UI
 - React Router
@@ -28,12 +35,11 @@ See E2E_STATUS.md for the detailed handoff and failure history.
 
 Requirements: Node.js 20 and npm.
 
-From the repository root:
-
     npm install
     npm start
 
-UI: http://localhost:3000. Development json-server: port 4000. The React proxy maps /api/* to that backend.
+UI: http://localhost:3000
+Development API: port 4000
 
 Useful checks:
 
@@ -42,78 +48,60 @@ Useful checks:
     cd surgery-ui
     npx playwright test
 
-Playwright starts a dedicated in-memory E2E API server, so browser tests do not mutate the normal db.json.
+Playwright starts a dedicated in-memory E2E API server, so browser tests do not mutate the normal `db.json`.
 
 ## Patient portal
 
-Entry: /patient/login
+Entry: `/patient/login`
 
-A successful patient login opens /patient/menu. Patients can update details, request appointments, view appointments, medical history, prescriptions and tests, and log out.
+Patient features:
+- Update details
+- Request appointment
+- View appointments
+- Medical history
+- Prescriptions
+- Tests
+- Logout
 
 ### Self-registration
 
 Flow:
-1. /register/start
-2. /register/personal
-3. /register/contact
-4. /register/consent
-5. /register/confirm
+1. `/register/start`
+2. `/register/personal`
+3. `/register/contact`
+4. `/register/consent`
+5. `/register/confirm`
 
 The confirmation step checks for an existing patient email before creating patient and registration records.
 
 ### Password reset
 
-Starts at /patient/password/forgot and completes at /patient/password/reset.
+Starts at `/patient/password/forgot` and completes at `/patient/password/reset`.
 
 ## Staff portal
 
-Entry: /staff/login
+Entry: `/staff/login`
 
-Sample development credentials from surgery-ui/server/db.json:
-- smith@lostinspace.com / pain
+Development credentials:
+- Patient: `martin@test.com / bananas`
+- Staff: `smith@lostinspace.com / pain`
 
-Staff can access appointment requests, registration requests, patient search, today's appointments and employees.
+Staff features include appointment requests, registration requests, patient search, today's appointments and employees.
 
-Staff-only routes use the role guard. Unauthenticated or patient users receive an access message.
+## Backend architecture
 
-### Appointment requests
+The current application uses json-server rather than MongoDB.
 
-Staff open /staff/appointmentRequests, select a request, then open /staff/appointmentRequest. Approval requires doctor, date and time and persists the appointment before removing the request.
+- Seed: `surgery-ui/server/db.json`
+- Routes: `surgery-ui/server/routes.json`
+- Proxy: `surgery-ui/src/setupProxy.js`
+- E2E API: `surgery-ui/scripts/e2e-server.js`
 
-### Patient search and records
-
-Staff search at /staff/search. Patient details link to medical history, prescriptions and tests. These staff record pages are protected.
-
-### Staff registration
-
-Available at /staff/register. Roles are Doctor, Nurse and Administrator.
-
-## Development backend
-
-The application currently uses json-server rather than a production API service.
-
-- Database: surgery-ui/server/db.json
-- Route aliases: surgery-ui/server/routes.json
-- Proxy: surgery-ui/src/setupProxy.js
-- E2E server: surgery-ui/scripts/e2e-server.js
-
-A MongoDB cluster is not currently required for the application or CI. Introduce MongoDB only as a deliberate backend migration and never commit its credentials.
+**MongoDB is not required for the current project.** Do not add credentials or connection strings to the repository.
 
 ## Testing and CI
 
-GitHub Actions runs dependency installation, unit tests, production build, Playwright installation, Chromium installation and Playwright browser tests.
-
-Current E2E coverage includes:
-- Patient entry and login
-- Patient portal navigation
-- Patient appointment request
-- Patient self-registration
-- Patient password reset
-- Staff login and management navigation
-- Staff patient search
-- Staff appointment approval
-- Staff employee creation
-- Protected patient/staff routes
+GitHub Actions runs dependency installation, Jest, production build, Playwright/Chromium installation and the 11-test Playwright suite.
 
 E2E failures block CI.
 
