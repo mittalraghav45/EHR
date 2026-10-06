@@ -5,10 +5,11 @@ import {useResource} from "react-request-hook";
 import {StateContext} from "../../contexts/contexts";
 import {PageTitle} from "../../components/PageTitle";
 import {AlternatingTableRow} from "../../components/AlternatingTableRow";
+import StaffOnly, { isLoggedIn } from "../../components/StaffOnly";
 
 export default function ViewEmployeesPage () {
 
-    const { dispatch } = useContext(StateContext)
+    const { dispatch, state } = useContext(StateContext)
 
     const navigate = useNavigate()
 
@@ -40,8 +41,9 @@ export default function ViewEmployeesPage () {
     return (
         <Stack direction="column">
             <PageTitle title="View Employees" />
+            <StaffOnly />
 
-            <EmployeeList />
+            { isLoggedIn(state) && <EmployeeList /> }
             <Stack direction="row">
                 <Button onClick={handleAdd}>Add</Button>
                 <Button variant="outlined" onClick={handleBack}>Back</Button>
