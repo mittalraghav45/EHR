@@ -37,7 +37,7 @@ export default function ForgotPasswordPage() {
 
         try {
             const normalisedEmail = email.trim().toLowerCase()
-            const lookup = await fetch("/patient?email=" + encodeURIComponent(normalisedEmail))
+            const lookup = await fetch("/api/patient?email=" + encodeURIComponent(normalisedEmail))
             if (!lookup.ok) {
                 throw new Error("Failed to query patients")
             }
@@ -52,7 +52,7 @@ export default function ForgotPasswordPage() {
             const token = generateResetToken()
             const expires = dayjs().add(30, "minute").toISOString()
 
-            const patch = await fetch("/patient/" + patient.id, {
+            const patch = await fetch("/api/patient/" + patient.id, {
                 method: "PATCH",
                 headers: { "Content-Type": "application/json" },
                 body: JSON.stringify({
