@@ -129,7 +129,6 @@ test("patient can complete self registration", async ({page, request}) => {
     await page.locator("#firstName").fill("Playwright");
     await page.locator("#surname").fill("Patient");
     await page.locator("#email").fill(email);
-    await page.locator("#confirmEmail").fill(email);
     await page.locator("#password").fill("Playwright1!");
     await page.locator("#confirmPassword").fill("Playwright1!");
     await page.getByRole("button", {name: "Next"}).click({force: true});
@@ -319,7 +318,7 @@ test("staff can create a new employee", async ({page, request}) => {
     const createResponse = page.waitForResponse(
       response => response.url().endsWith("/api/employee") && response.request().method() === "POST"
     );
-    await page.getByRole("button", {name: "Register"}).click({force: true});
+    await page.getByRole("button", {name: "Save"}).click({force: true});
     const response = await createResponse;
     expect(response.ok()).toBeTruthy();
     await expect(page).toHaveURL(/\/staff\/employees$/);
