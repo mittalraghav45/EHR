@@ -319,7 +319,7 @@ test("staff can create a new employee", async ({page, request}) => {
     const createResponse = page.waitForResponse(
       response => response.url().endsWith("/api/employee") && response.request().method() === "POST"
     );
-    await page.getByRole("button", {name: "Save"}).click({force: true});
+    await page.getByRole("button", {name: "Register"}).click({force: true});
     const response = await createResponse;
     expect(response.ok()).toBeTruthy();
     await expect(page).toHaveURL(/\/staff\/employees$/);
