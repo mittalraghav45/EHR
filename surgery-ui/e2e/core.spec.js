@@ -148,11 +148,14 @@ test("patient can complete self registration", async ({page, request}) => {
     const patientResponse = page.waitForResponse(
       response => response.url().endsWith("/api/patient") && response.request().method() === "POST"
     );
+    const registrationResponse = page.waitForResponse(
+      response => response.url().endsWith("/api/registration") && response.request().method() === "POST"
+    );
     await page.getByRole("button", {name: "Submit"}).click({force: true});
     const createdPatientResponse = await patientResponse;
     expect(createdPatientResponse.ok()).toBeTruthy();
-    const registrationResponse = await page.waitForResponse(response => response.url().endsWith("/api/registration") && response.request().method() === "POST");
-    expect(registrationResponse.ok()).toBeTruthy();
+    const createdRegistrationResponse = await registrationResponse;
+    expect(createdRegistrationResponse.ok()).toBeTruthy();
 
     await expect(page).toHaveURL(/\/patient\/login$/);
     await expect(page.getByText(/Registration complete!/)).toBeVisible();
