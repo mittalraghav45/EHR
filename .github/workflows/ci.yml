@@ -27,3 +27,9 @@ jobs:
         run: npm test -- --watchAll=false
       - name: Build
         run: CI=false npm run build
+      - name: Install Playwright
+        run: npm install --no-save --no-audit --no-fund @playwright/test
+      - name: Install Chromium
+        run: npx playwright install --with-deps chromium
+      - name: Run Playwright E2E
+        run: npx playwright test
