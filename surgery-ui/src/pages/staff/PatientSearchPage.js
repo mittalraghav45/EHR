@@ -107,8 +107,8 @@ function PatientList({ patients = [] }) {
           </TableRow>
         </TableHead>
         <TableBody>
-          {patients.map((patient, index) => (
-            <PatientSummary key={"patient-" + index} index={index} />
+          {patients.map((patient) => (
+            <PatientSummary key={"patient-" + patient.id} patient={patient} />
           ))}
         </TableBody>
       </Table>
@@ -116,11 +116,9 @@ function PatientList({ patients = [] }) {
   );
 }
 
-function PatientSummary({ index }) {
-  const { state, dispatch } = useContext(StateContext);
+function PatientSummary({ patient }) {
+  const { dispatch } = useContext(StateContext);
   const navigate = useNavigate();
-  const { patients } = state;
-  const patient = patients[index];
 
   function handleView(event) {
     dispatch({ type: "VIEW_PATIENT", patient: patient });
