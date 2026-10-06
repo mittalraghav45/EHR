@@ -5,9 +5,15 @@ const API = "http://127.0.0.1:4000";
 async function preparePage(page) {
   const runtimeErrors = [];
   page.on("pageerror", error => runtimeErrors.push(error.message));
-  await page.addStyleTag({
-    content: "#webpack-dev-server-client-overlay { pointer-events: none !important; }"
-  }).catch(() => {});
+  await page.addInitScript(() => {
+    const install = () => {
+      const style = document.createElement("style");
+      style.textContent = "#webpack-dev-server-client-overlay { pointer-events: none !important; }";
+      document.head.appendChild(style);
+    };
+    if (document.head) install();
+    else document.addEventListener("DOMContentLoaded", install, {once: true});
+  });
   return runtimeErrors;
 }
 
