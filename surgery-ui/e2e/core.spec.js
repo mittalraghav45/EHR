@@ -129,6 +129,7 @@ test("patient can complete self registration", async ({page, request}) => {
     await page.locator("#firstName").fill("Playwright");
     await page.locator("#surname").fill("Patient");
     await page.locator("#email").fill(email);
+    await page.locator("#confirmEmail").fill(email);
     await page.locator("#password").fill("Playwright1!");
     await page.locator("#confirmPassword").fill("Playwright1!");
     await page.getByRole("button", {name: "Next"}).click({force: true});
@@ -310,7 +311,6 @@ test("staff can create a new employee", async ({page, request}) => {
     await page.locator("#firstName").fill("Playwright");
     await page.locator("#surname").fill("Staff");
     await page.locator("#email").fill(email);
-    await page.locator("#confirmEmail").fill(email);
     await page.locator("#password").fill("Playwright1!");
     await page.locator("#confirmPassword").fill("Playwright1!");
     await page.locator("#role").click({force: true});
