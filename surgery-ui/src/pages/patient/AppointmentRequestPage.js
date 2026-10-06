@@ -8,7 +8,6 @@ import {StateContext} from "../../contexts/contexts";
 import {appointmentTypes} from "../../utils/dropdownLists";
 import {LabelledCheckbox} from "../../components/LabelledCheckbox";
 import {Information} from "../../components/Information";
-import {useResource} from "react-request-hook";
 
 export default function AppointmentRequestPage () {
 
