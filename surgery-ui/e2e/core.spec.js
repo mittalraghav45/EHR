@@ -151,6 +151,8 @@ test("patient can complete self registration", async ({page, request}) => {
     await page.getByRole("button", {name: "Submit"}).click({force: true});
     const createdPatientResponse = await patientResponse;
     expect(createdPatientResponse.ok()).toBeTruthy();
+    const registrationResponse = await page.waitForResponse(response => response.url().endsWith("/api/registration") && response.request().method() === "POST");
+    expect(registrationResponse.ok()).toBeTruthy();
 
     await expect(page).toHaveURL(/\/patient\/login$/);
     await expect(page.getByText(/Registration complete!/)).toBeVisible();
@@ -273,7 +275,7 @@ test("staff can approve a patient appointment request", async ({page, request}) 
     const appointmentPost = page.waitForResponse(
       response => response.url().endsWith("/api/appointment") && response.request().method() === "POST"
     );
-    await page.getByRole("button", {name: "Save"}).click({force: true});
+    await page.getByRole("button", {name: "Register"}).click({force: true});
     const response = await appointmentPost;
     expect(response.ok()).toBeTruthy();
     const appointment = await response.json();
@@ -305,6 +307,7 @@ test("staff can create a new employee", async ({page, request}) => {
     await page.locator("#firstName").fill("Playwright");
     await page.locator("#surname").fill("Staff");
     await page.locator("#email").fill(email);
+    await page.locator("#confirmEmail").fill(email);
     await page.locator("#password").fill("Playwright1!");
     await page.locator("#confirmPassword").fill("Playwright1!");
     await page.locator("#role").click({force: true});
