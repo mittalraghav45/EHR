@@ -16,6 +16,7 @@ import {ThemeProvider} from "@mui/material";
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import 'dayjs/locale/en-gb'
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
+import { BrowserRouter } from 'react-router-dom';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 
@@ -25,6 +26,7 @@ const axiosInstance = axios.create({
 
 root.render(
   <React.StrictMode>
+      <BrowserRouter>
       <RequestProvider value={axiosInstance}>
           <ThemeProvider theme={ theme }>
               <LocalizationProvider dateAdapter={AdapterDayjs} adapterLocale="en-gb">
