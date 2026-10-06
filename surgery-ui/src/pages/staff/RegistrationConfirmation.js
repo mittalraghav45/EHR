@@ -35,6 +35,9 @@ export default function SelfRegistrationConfirmPage () {
     }
 
     return (
+        <>
+            <StaffOnly />
+            {isLoggedIn(state) && (
         <Container>
             <Typography spacing={2} color="textSecondary" variant="h4">
                 Staff Registration
@@ -47,5 +50,7 @@ export default function SelfRegistrationConfirmPage () {
                 </Stack>
             </Stack>
         </Container>
+            )}
+        </>
     )
 }
