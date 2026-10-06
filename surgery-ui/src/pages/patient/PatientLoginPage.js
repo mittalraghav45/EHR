@@ -25,7 +25,11 @@ export default function PatientLoginPage() {
         method: "get"
     }))
 
-    const [ loginFeedback, setLoginFeedback ] = useState(location.state)
+    const [ loginFeedback, setLoginFeedback ] = useState(() => {
+        const params = new URLSearchParams(location.search)
+        if (params.get("sessionExpired") === "true") return { sessionExpired: true }
+        return location.state
+    })
 
     useEffect(() => {
         if (location.state) {
