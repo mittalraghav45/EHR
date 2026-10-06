@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState } from "react";
+import React, { useContext, useEffect, useMemo, useState } from "react";
 import {
   Button,
   Stack,
@@ -43,11 +43,20 @@ export default function PatientSearchPage() {
     navigate("/staff/menu");
   }
 
-  const handleSearch = () => {
-    console.log("Helllooooo");
-  };
+  const filteredPatients = useMemo(() => {
+    const query = searchTerm.trim().toLowerCase();
+    if (!query) return statePatients;
+    return statePatients.filter((patient) => {
+      const name = `${patient.title || ""} ${patient.firstName || ""} ${patient.surname || ""}`.trim();
+      return [name, patient.email, patient.dateOfBirth, patient.gender]
+        .filter(Boolean)
+        .some((value) => String(value).toLowerCase().includes(query));
+    });
+  }, [searchTerm, statePatients]);
 
-  console.log(searchTerm);
+  const handleSearch = (event) => {
+    event.preventDefault();
+  };
 
   return (
     <Stack direction="column">
@@ -70,7 +79,7 @@ export default function PatientSearchPage() {
         </Button>
       </Stack>
 
-      <PatientList/>
+      <PatientList patients={filteredPatients}/>
       <Stack direction="row">
         <Button variant="outlined" onClick={handleBack}>
           Back
