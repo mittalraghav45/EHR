@@ -50,6 +50,9 @@ export default function PatientDetailsPage() {
   }
 
   return (
+        <>
+            <StaffOnly />
+            {isLoggedIn(state) && (
     <Stack direction="column">
       <PageTitle title="Patient Details" />
 
