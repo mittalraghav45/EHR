@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { InputLabel, Select, MenuItem, FormLabel, Button, Container, Stack, TextField, Typography } from "@mui/material";
 import validator from "validator";
+import { evaluatePassword } from "../../utils/passwordPolicy";
 import { encrypt } from "../../utils/encrypt";
 import { useResource } from "react-request-hook";
 
@@ -28,8 +29,9 @@ export default function StaffRegistrationPage() {
     const passwordsMatch = (password === confirmPassword)
     const passwordError = passwordsMatch ? "" : "Passwords do not match"
 
-    const mandatory = firstName !== "" && surname !== "" && email !== "" && password !== ""
-        && emailValid && emailsMatch && passwordsMatch
+    const passwordPolicyMet = evaluatePassword(password).isValid
+    const mandatory = firstName.trim() !== "" && surname.trim() !== "" && email.trim() !== "" && password !== ""
+        && title !== "" && role !== "" && emailValid && emailsMatch && passwordsMatch && passwordPolicyMet
 
 
     const [ , createStaffRegistration ] = useResource((data) => ({
@@ -73,10 +75,8 @@ export default function StaffRegistrationPage() {
     }
 
     function handleRegister(event) {
-        // dispatch({ type: "REGISTER_STAFF", firstName, surname, email, password, role });  put Title
         const hashed = encrypt(password);
-        const submitted = { 'firstName':firstName,'surname':surname,'email':email,'role':role,'title':title, password: hashed }
-        console.log('submitted data  ' ,submitted);
+        const submitted = { firstName: firstName.trim(), surname: surname.trim(), email: email.trim().toLowerCase(), role, title, password: hashed };
         createStaffRegistration(submitted);
         navigate("/staff/menu");
     }
@@ -116,9 +116,9 @@ export default function StaffRegistrationPage() {
 
                 <InputLabel id="role-label">Role</InputLabel>
                 <Select labelId="role-label" id="role" value={role} onChange={handleRole} label="Role" name="role">
-                    <MenuItem value="nurse">Nurse</MenuItem>
-                    <MenuItem value="doctor">Doctor</MenuItem>
-                    <MenuItem value="admin">Admin</MenuItem>
+                    <MenuItem value="Nurse">Nurse</MenuItem>
+                    <MenuItem value="Doctor">Doctor</MenuItem>
+                    <MenuItem value="Administrator">Administrator</MenuItem>
                 </Select>
                 <Stack direction="row" spacing={1}>
                     <Button variant="outlined" onClick={handleCancel}>Cancel</Button>
