@@ -120,7 +120,6 @@ test("patient can complete self registration", async ({page, request}) => {
   const errors = await preparePage(page);
   const email = "playwright-" + Date.now() + "@example.com";
 
-  try {
     await page.goto("/register/start");
     await page.locator("#firstName").fill("Playwright");
     await page.locator("#surname").fill("Patient");
@@ -159,10 +158,6 @@ test("patient can complete self registration", async ({page, request}) => {
 
     await expect(page).toHaveURL(/\/patient\/login$/);
     await expect(page.getByText(/Registration complete!/)).toBeVisible();
-  } finally {
-    await deleteByEmail(request, "patient", email);
-    await deleteByEmail(request, "registration", email);
-  }
 
   await expectNoRuntimeErrors(errors);
 });
