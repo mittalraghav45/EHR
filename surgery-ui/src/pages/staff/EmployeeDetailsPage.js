@@ -106,6 +106,8 @@ export default function EmployeeDetailsPage() {
 
     return (
         <Stack direction="column">
+            <StaffOnly />
+            {isLoggedIn(state) && (
             <PageTitle title="Employee Details" />
             <FormLabel>Title</FormLabel>
             <Select id="title" value={title} onChange={handleTitle}>
@@ -141,6 +143,7 @@ export default function EmployeeDetailsPage() {
                 <Button onClick={ handleDelete } disabled={ !deletable }>Delete</Button>
                 <Button variant="outlined" onClick={handleCancel}>Cancel</Button>
             </Stack>
+            )}
         </Stack>
     )
 }
