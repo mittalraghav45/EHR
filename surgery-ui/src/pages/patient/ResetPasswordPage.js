@@ -43,7 +43,7 @@ export default function ResetPasswordPage() {
 
         try {
             const normalisedEmail = email.trim().toLowerCase()
-            const lookup = await fetch("/patient?email=" + encodeURIComponent(normalisedEmail))
+            const lookup = await fetch("/api/patient?email=" + encodeURIComponent(normalisedEmail))
             if (!lookup.ok) {
                 throw new Error("Failed to retrieve patient for reset")
             }
@@ -68,7 +68,7 @@ export default function ResetPasswordPage() {
             }
 
             const hashed = encrypt(password)
-            const patch = await fetch("/patient/" + patient.id, {
+            const patch = await fetch("/api/patient/" + patient.id, {
                 method: "PATCH",
                 headers: { "Content-Type": "application/json" },
                 body: JSON.stringify({
