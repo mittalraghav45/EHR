@@ -38,6 +38,9 @@ export default function MedicalHistoryPage() {
     }
 
     return (
+        <>
+            <StaffOnly />
+            {isLoggedIn(state) && (
         <Stack direction="column">
             <PageTitle title="View Medical History" />
             <MedHistoryList />
@@ -104,6 +107,8 @@ function MedHistoryListSummary({ index }) {
                 </Stack>        
             </TableCell>
         </TableRow>
+            )}
+        </>
     )
 }
  
