@@ -1,52 +1,46 @@
 # EHR Agent Guide
 
 ## Purpose
-Cloud Surgery is a React electronic health-record application with patient and staff portals. Keep changes functional, testable, and consistent with the existing React Router + MUI + json-server architecture.
+Cloud Surgery is a React electronic health-record application with patient and staff portals. Keep changes functional, testable, and consistent with React Router + MUI + json-server.
 
 ## Repository layout
-- `surgery-ui/`: active application.
-- `surgery-ui/src/`: React UI, pages, components, contexts and reducers.
-- `surgery-ui/server/db.json`: development/test data.
-- `surgery-ui/server/routes.json`: json-server login route aliases.
-- `surgery-ui/e2e/`: Playwright end-to-end tests.
-- `.github/workflows/ci.yml`: unit-test, build and E2E CI.
+- surgery-ui/: active application
+- surgery-ui/src/: React UI, pages, components, contexts and reducers
+- surgery-ui/server/db.json: development/test seed data
+- surgery-ui/server/routes.json: json-server route aliases
+- surgery-ui/scripts/e2e-server.js: isolated in-memory API server for Playwright
+- surgery-ui/e2e/: Playwright tests
+- .github/workflows/ci.yml: CI
+- E2E_STATUS.md: current testing/project handoff
 
 ## Runtime
-The UI runs on port 3000 and proxies `/api/*` to json-server on port 4000. The React app uses BrowserRouter at the application root.
+UI: port 3000. Browser API calls use /api/* and are proxied to port 4000. BrowserRouter is mounted at the application root.
 
-## Commands
-From the repository root:
-- `npm install`
-- `npm test`
-- `npm run build`
-- `npm start`
-
-From `surgery-ui/`:
-- `npm test`
-- `npm run build`
-- `npm start`
-- `npx playwright test`
-
-CI installs Playwright and Chromium and runs browser tests after unit tests and the production build.
+Normal development uses server/db.json. Playwright uses e2e-server.js, which loads the same seed into memory and runs independently.
 
 ## Functional boundaries
 - Patient routes must not expose staff functionality.
-- Staff routes must use `StaffOnly`/role checks.
-- Patient appointment requests must wait for a successful POST before navigating away.
-- Staff appointment approval must validate the request, doctor, date and time and only navigate after persistence succeeds.
+- Staff routes must use StaffOnly/role checks.
+- Appointment requests must persist successfully before navigation.
+- Appointment date selection must use React state; do not mutate state objects in place.
+- Staff appointment approval must validate request, doctor, date and time before persistence.
 - Registration must validate required data and prevent duplicate patient email registration.
-- Session expiry must return users to the appropriate login screen.
+- Browser API calls must use /api/*.
+- Session expiry must return users to the correct login screen.
 - Logout must clear application session state.
 
 ## Testing rules
-When changing a workflow, update or add the closest unit/E2E test. Do not weaken assertions to make a failing test pass. Browser tests should exercise visible user behaviour and real HTTP requests against the development json-server.
+Update tests with workflow changes. Do not weaken assertions to make failures disappear. Browser tests must exercise visible behaviour and real HTTP requests against the isolated E2E API.
+
+Do not skip failing tests. Diagnose the application or fixture and fix the underlying issue.
 
 ## Data rules
-`server/db.json` contains development credentials and sample clinical data. Never add real patient data, secrets, production credentials, tokens or API keys.
+Use synthetic development data only. Never commit real patient data, production credentials, secrets, tokens, API keys or MongoDB connection strings.
 
 ## Change discipline
-1. Inspect the existing route/component/reducer flow before changing it.
-2. Preserve existing domain terminology and API resource names unless there is a clear migration.
-3. Prefer small, coherent commits.
-4. Run/verify unit tests, production build and Playwright E2E in CI.
-5. Update README/docs when routes, commands, workflows or operational assumptions change.
+1. Inspect the existing route/state flow.
+2. Preserve domain/API resource names unless deliberately migrating.
+3. Prefer small coherent commits.
+4. Verify unit tests, build and Playwright E2E in CI.
+5. Update documentation when routes, commands, workflows or backend assumptions change.
+6. Do not call the project complete until critical E2E workflows are green.
