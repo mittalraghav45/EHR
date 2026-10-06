@@ -136,7 +136,8 @@ test("patient can complete self registration", async ({page, request}) => {
     await page.locator("#title").click({force: true});
     await page.getByRole("option", {name: "Mr", exact: true}).click({force: true});
     await page.locator("#gender").click({force: true});
-    await page.getByText("Male", {exact: true}).last().click({force: true});
+    await page.keyboard.press("ArrowDown");
+    await page.keyboard.press("Enter");
     await page.getByRole("button", {name: "Next"}).click({force: true});
 
     await page.locator("#street").fill("1 Playwright Street");
