@@ -33,7 +33,8 @@
     "build": "react-scripts build",
     "test": "react-scripts test --watchAll=false",
     "test:watch": "react-scripts test",
-    "check": "npm run test"
+    "check": "npm run test",
+    "db:e2e": "node scripts/e2e-server.js"
   },
   "eslintConfig": {
     "extends": [
