@@ -14,13 +14,14 @@ import {useContext, useEffect} from "react";
 import {useResource} from "react-request-hook";
 import {StateContext} from "../../contexts/contexts";
 import {AlternatingTableRow} from "../../components/AlternatingTableRow";
+import StaffOnly, { isLoggedIn } from "../../components/StaffOnly";
 
 export default function ViewRegistrationRequestsPage () {
 
     const title = 'Cloud Surgery Registration Requests'
     useEffect(() => { document.title = title; }, [])
 
-    const { dispatch } = useContext(StateContext)
+    const { dispatch, state } = useContext(StateContext)
 
     const navigate = useNavigate()
 
@@ -47,8 +48,9 @@ export default function ViewRegistrationRequestsPage () {
     return (
         <Container>
             <Typography spacing={1} margin={1} color="textSecondary" variant="h4">{ title }</Typography>
+            <StaffOnly />
             <Stack direction="column" spacing={1} margin={1}>
-                <RegistrationList />
+                { isLoggedIn(state) && <RegistrationList /> }
                 <Stack direction="row" spacing={1}>
                     <Button variant="outlined" onClick={handleBack}>Back</Button>
                 </Stack>
