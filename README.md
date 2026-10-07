@@ -105,6 +105,15 @@ GitHub Actions runs dependency installation, Jest, production build, Playwright/
 
 E2E failures block CI.
 
+## Documentation
+
+Additional portfolio and verification documentation is available in [`docs/`](docs/README.md):
+
+- [Documentation Index](docs/README.md)
+- [Testing & Verification Report](docs/TESTING.md)
+- [Security & Limitations](docs/SECURITY_AND_LIMITATIONS.md)
+- [Wiki-ready Portfolio Status](docs/WIKI_PORTFOLIO_STATUS.md)
+
 ## Security
 
 This is a development/academic application, not production clinical infrastructure. Production use would require a real backend, stronger authentication/authorization, sensitive-data protection, audit controls and security review.
