@@ -9,6 +9,7 @@ export function LabelledCheckbox({ label, value, checked = false, onChange }) {
                     value={value}
                     checked={checked}
                     onChange={(event) => onChange(event, event.target.checked)}
+                    inputProps={{ "aria-label": label }}
                 />
             }
         />
