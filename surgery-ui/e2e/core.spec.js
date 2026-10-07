@@ -102,7 +102,7 @@ test("patient can submit an appointment request", async ({page, request}) => {
   await page.locator("#appointmentType").click({force: true});
   await page.getByRole("option", {name: "Routine"}).click({force: true});
   await page.locator("#comments").fill("Playwright appointment request");
-  const firstDateCheckbox = page.locator('input[type="checkbox"]').first();
+  const firstDateCheckbox = page.getByRole("checkbox").first();
   await firstDateCheckbox.check({force: true});
   await expect(firstDateCheckbox).toBeChecked();
 
