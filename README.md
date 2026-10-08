@@ -1,24 +1,17 @@
 # Cloud Surgery EHR
 
-Cloud Surgery is a React-based electronic-health-record application with separate patient and staff portals.
+Cloud Surgery is a React-based electronic-health-record coursework prototype with separate patient and staff portals.
 
 ## Current status
 
-**Core application functional; Playwright release gate is not yet green.**
+**Core application functional; local release checks are green.**
 
-Latest completed GitHub Actions run:
-- Run #80
-- Jest: passing
-- Production build: passing
-- Playwright: **8 passing / 3 failing**
-- No CI run currently active
+Latest local verification, 8 October 2026:
+- Jest / React Testing Library: **4 suites, 8 tests passing**
+- Production build: **passing**, with non-blocking legacy ESLint warnings
+- Playwright Chromium E2E: **11 passing / 0 failing**
 
-Remaining E2E failures:
-1. patient appointment-date checkbox state;
-2. patient self-registration timeout;
-3. staff employee-registration timeout.
-
-Read `HANDOFF.md`, `PROJECT_STATUS.md` and `E2E_STATUS.md` before continuing work.
+GitHub Actions should be rerun after pushing these changes so the remote badge/history reflects the local green state.
 
 ## Stack
 
@@ -33,22 +26,30 @@ Read `HANDOFF.md`, `PROJECT_STATUS.md` and `E2E_STATUS.md` before continuing wor
 
 ## Local development
 
-Requirements: Node.js 20 and npm.
+Requirements: Node.js and npm.
 
-    npm install
-    npm start
+```bash
+npm install
+npm start
+```
 
-UI: http://localhost:3000
-Development API: port 4000
+UI: `http://localhost:3000`
+Development API: port `4000`
 
 Useful checks:
 
-    npm test
-    npm run build
-    cd surgery-ui
-    npx playwright test
+```bash
+npm test
+npm run build
+npm run test:e2e
+```
 
 Playwright starts a dedicated in-memory E2E API server, so browser tests do not mutate the normal `db.json`.
+
+## Demo credentials
+
+- Patient: `martin@test.com / bananas`
+- Staff: `smith@lostinspace.com / pain`
 
 ## Patient portal
 
@@ -61,30 +62,12 @@ Patient features:
 - Medical history
 - Prescriptions
 - Tests
-- Logout
-
-### Self-registration
-
-Flow:
-1. `/register/start`
-2. `/register/personal`
-3. `/register/contact`
-4. `/register/consent`
-5. `/register/confirm`
-
-The confirmation step checks for an existing patient email before creating patient and registration records.
-
-### Password reset
-
-Starts at `/patient/password/forgot` and completes at `/patient/password/reset`.
+- Password reset
+- Self-registration
 
 ## Staff portal
 
 Entry: `/staff/login`
-
-Development credentials:
-- Patient: `martin@test.com / bananas`
-- Staff: `smith@lostinspace.com / pain`
 
 Staff features include appointment requests, registration requests, patient search, today's appointments and employees.
 
@@ -96,14 +79,9 @@ The current application uses json-server rather than MongoDB.
 - Routes: `surgery-ui/server/routes.json`
 - Proxy: `surgery-ui/src/setupProxy.js`
 - E2E API: `surgery-ui/scripts/e2e-server.js`
+- E2E static frontend/proxy: `surgery-ui/scripts/static-server.js`
 
 **MongoDB is not required for the current project.** Do not add credentials or connection strings to the repository.
-
-## Testing and CI
-
-GitHub Actions runs dependency installation, Jest, production build, Playwright/Chromium installation and the 11-test Playwright suite.
-
-E2E failures block CI.
 
 ## Documentation
 

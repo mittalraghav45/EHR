@@ -6,7 +6,6 @@ import PatientOnly, {isLoggedIn} from "../../components/PatientOnly";
 import {Fragment, useContext, useState} from "react";
 import {StateContext} from "../../contexts/contexts";
 import {appointmentTypes} from "../../utils/dropdownLists";
-import {LabelledCheckbox} from "../../components/LabelledCheckbox";
 import {Information} from "../../components/Information";
 
 export default function AppointmentRequestPage () {
@@ -91,12 +90,16 @@ export default function AppointmentRequestPage () {
                     <Grid container spacing={1}>
                         { dates.map((day, index) => (
                             <Grid xs={3} key={day.persisted || day.display}>
-                                <LabelledCheckbox
-                                label={ day.display }
-                                value={ index }
-                                checked={ selectedDates.includes(index) }
-                                onChange={ (_, checked) => handleCheckbox(index, checked) }
-                            />
+                                <label>
+                                    <input
+                                        type="checkbox"
+                                        aria-label={day.display}
+                                        value={index}
+                                        checked={selectedDates.includes(index)}
+                                        onChange={event => handleCheckbox(index, event.target.checked)}
+                                    />
+                                    {day.display}
+                                </label>
                             </Grid>
                         ))}
                     </Grid>

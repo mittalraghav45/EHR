@@ -1,19 +1,21 @@
 import { useNavigate } from "react-router-dom";
 import {Alert, Button, FormControl, FormLabel, MenuItem, RadioGroup, Select, Stack} from "@mui/material";
 import {PageTitle} from "../../components/PageTitle";
-import {useContext, useState} from "react";
+import {useContext, useEffect, useState} from "react";
 import {StateContext} from "../../contexts/contexts";
 import AppointmentRequest from "../../components/AppointmentRequest";
 import {LabelledRadioButton} from "../../components/LabelledRadioButton";
 import {getFullName} from "../../utils/builders";
 import {appointmentTimes, displayDate} from "../../utils/workingDays";
 import StaffOnly, {isLoggedIn} from "../../components/StaffOnly";
+import {useResource} from "react-request-hook";
 
 export default function AppointmentRequestDetailsPage () {
-    const { state } = useContext(StateContext)
+    const { state, dispatch } = useContext(StateContext)
     const { appointmentRequest = {}, employees = [] } = state
     const doctors = employees.filter(employee => employee.role === "Doctor")
     const hasRequest = Array.isArray(appointmentRequest.availableDates) && appointmentRequest.availableDates.length > 0
+    const staffLoggedIn = isLoggedIn(state)
 
     const [ doctor, setDoctor ] = useState(0)
     const [ appointmentSlots ] = useState(appointmentTimes)
@@ -23,6 +25,26 @@ export default function AppointmentRequestDetailsPage () {
     const [ saveError, setSaveError ] = useState("")
 
     const navigate = useNavigate()
+
+    const [ employeeResponse, getEmployees ] = useResource(() => ({
+        url: "/employee",
+        method: "get"
+    }))
+
+    useEffect(() => {
+        if (staffLoggedIn && !employees.length) {
+            getEmployees()
+        }
+    }, [staffLoggedIn, employees.length, getEmployees])
+
+    useEffect(() => {
+        if (employeeResponse && employeeResponse.error) {
+            dispatch({ type: "REST_ERROR" })
+        }
+        if (employeeResponse && employeeResponse.data) {
+            dispatch({ type: "FETCH_EMPLOYEES", employees: employeeResponse.data })
+        }
+    }, [employeeResponse, dispatch])
 
     function handleBack() {
         navigate("/staff/appointmentRequests")
@@ -74,7 +96,7 @@ export default function AppointmentRequestDetailsPage () {
         <Stack direction="column">
             <PageTitle title="Appointment Request" />
             <StaffOnly />
-            {isLoggedIn(state) && (
+            {staffLoggedIn && (
                 <>
                     <AppointmentRequest />
                     {!hasRequest && (

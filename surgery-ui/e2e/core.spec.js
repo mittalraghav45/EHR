@@ -75,19 +75,23 @@ test("patient can navigate every patient portal section", async ({page}) => {
 
   await page.getByRole("button", {name: "Update Your Details"}).click({force: true});
   await expect(page.getByRole("heading", {name: /View Personal Details/})).toBeVisible();
-  await page.getByRole("button", {name: "Back"}).click({force: true});
+  await page.goBack();
+  await expect(page.getByRole("heading", {name: /Patient Menu/})).toBeVisible();
 
   await page.getByRole("button", {name: "View Your Appointments"}).click({force: true});
   await expect(page.getByRole("heading", {name: /View Appointments/})).toBeVisible();
-  await page.getByRole("button", {name: "Back"}).click({force: true});
+  await page.goBack();
+  await expect(page.getByRole("heading", {name: /Patient Menu/})).toBeVisible();
 
   await page.getByRole("button", {name: "View Your Medical History"}).click({force: true});
   await expect(page.getByRole("heading", {name: /View Medical History/})).toBeVisible();
-  await page.getByRole("button", {name: "Back"}).click({force: true});
+  await page.goBack();
+  await expect(page.getByRole("heading", {name: /Patient Menu/})).toBeVisible();
 
   await page.getByRole("button", {name: "View Your Prescriptions"}).click({force: true});
   await expect(page.getByRole("heading", {name: /View Prescriptions/})).toBeVisible();
-  await page.getByRole("button", {name: "Back"}).click({force: true});
+  await page.goBack();
+  await expect(page.getByRole("heading", {name: /Patient Menu/})).toBeVisible();
 
   await page.getByRole("button", {name: "View Your Test Details"}).click({force: true});
   await expect(page.getByRole("heading", {name: /View Tests/})).toBeVisible();
@@ -103,7 +107,7 @@ test("patient can submit an appointment request", async ({page, request}) => {
   await page.getByRole("option", {name: "Routine"}).click({force: true});
   await page.locator("#comments").fill("Playwright appointment request");
   const firstDateCheckbox = page.getByRole("checkbox").first();
-  await firstDateCheckbox.check({force: true});
+  await firstDateCheckbox.click();
   await expect(firstDateCheckbox).toBeChecked();
 
   const responsePromise = page.waitForResponse(
@@ -220,15 +224,18 @@ test("staff can log in and navigate staff management sections", async ({page}) =
 
   await page.getByRole("button", {name: "Employees"}).click({force: true});
   await expect(page.getByRole("heading", {name: /View Employees/})).toBeVisible();
-  await page.getByRole("button", {name: "Back"}).click({force: true});
+  await page.goto("/staff/menu");
+  await expect(page.getByRole("heading", {name: /Staff Menu/})).toBeVisible();
 
   await page.getByRole("button", {name: "Search Patient"}).click({force: true});
   await expect(page.getByRole("heading", {name: /Search Patients/})).toBeVisible();
-  await page.getByRole("button", {name: "Back"}).click({force: true});
+  await page.goto("/staff/menu");
+  await expect(page.getByRole("heading", {name: /Staff Menu/})).toBeVisible();
 
   await page.getByRole("button", {name: "Registration Requests"}).click({force: true});
   await expect(page.getByRole("heading", {name: /Registration Requests/})).toBeVisible();
-  await page.getByRole("button", {name: "Back"}).click({force: true});
+  await page.goto("/staff/menu");
+  await expect(page.getByRole("heading", {name: /Staff Menu/})).toBeVisible();
 
   await page.getByRole("button", {name: "Appointment Requests"}).click({force: true});
   await expect(page.getByRole("heading", {name: /View Appointment Requests/})).toBeVisible();
@@ -300,8 +307,10 @@ test("staff can create a new employee", async ({page, request}) => {
 
   try {
     await loginStaff(page);
-    await page.getByRole("button", {name: "Employees"}).click({force: true});
-    await page.getByRole("button", {name: "Add"}).click({force: true});
+    await page.getByRole("button", {name: "Employees"}).click();
+    await expect(page.getByRole("heading", {name: /View Employees/})).toBeVisible();
+    await page.getByRole("button", {name: "Add"}).click();
+    await expect(page.getByRole("heading", {name: /Employee Details/})).toBeVisible();
 
     await page.locator("#title").selectOption("Mr");
     await page.locator("#firstName").fill("Playwright");

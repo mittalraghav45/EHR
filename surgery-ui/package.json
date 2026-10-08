@@ -28,12 +28,15 @@
   "scripts": {
     "start": "concurrently -k \"npm:server\" \"npm:client\"",
     "client": "react-scripts start",
+    "client:e2e": "node --max-old-space-size=4096 ./node_modules/react-scripts/scripts/start.js",
+    "serve:e2e": "node scripts/static-server.js",
     "server": "npm run db",
     "db": "json-server server/db.json --port 4000 --routes server/routes.json",
     "build": "react-scripts build",
     "test": "react-scripts test --watchAll=false",
+    "test:e2e": "playwright test",
     "test:watch": "react-scripts test",
-    "check": "npm run test",
+    "check": "npm run test && npm run test:e2e",
     "db:e2e": "node scripts/e2e-server.js"
   },
   "eslintConfig": {
@@ -53,5 +56,9 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
+  },
+  "devDependencies": {
+    "@babel/plugin-proposal-private-property-in-object": "^7.21.11",
+    "@playwright/test": "^1.64.0"
   }
 }
