@@ -18,6 +18,7 @@
     "build": "npm --prefix surgery-ui run build",
     "test": "npm --prefix surgery-ui test",
     "test:e2e": "npm --prefix surgery-ui run test:e2e",
+    "record:demo": "npm --prefix surgery-ui run record:demo",
     "check": "npm --prefix surgery-ui run check"
   },
   "repository": {

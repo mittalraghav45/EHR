@@ -35,6 +35,7 @@
     "build": "react-scripts build",
     "test": "react-scripts test --watchAll=false",
     "test:e2e": "playwright test",
+    "record:demo": "npm run build && node scripts/record-demo.js",
     "test:watch": "react-scripts test",
     "check": "npm run test && npm run test:e2e",
     "db:e2e": "node scripts/e2e-server.js"
